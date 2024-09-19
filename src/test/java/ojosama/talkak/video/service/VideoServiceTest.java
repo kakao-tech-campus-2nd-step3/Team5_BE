@@ -1,7 +1,8 @@
-package ojosama.talkak.service;
+package ojosama.talkak.video.service;
 
-import ojosama.talkak.exception.YoutubeValidationException;
-import ojosama.talkak.request.YoutubeUrlValidationRequestDto;
+import ojosama.talkak.video.exception.YoutubeValidationException;
+import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
+import ojosama.talkak.video.service.VideoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
