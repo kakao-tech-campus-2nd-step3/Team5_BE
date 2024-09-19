@@ -1,10 +1,10 @@
-package ojosama.talkak.service;
+package ojosama.talkak.video.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ojosama.talkak.exception.YoutubeValidationException;
-import ojosama.talkak.request.YoutubeUrlValidationRequestDto;
-import ojosama.talkak.response.YoutubeUrlValidationResponseDto;
+import ojosama.talkak.video.exception.YoutubeValidationException;
+import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
+import ojosama.talkak.video.dto.YoutubeUrlValidationResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
