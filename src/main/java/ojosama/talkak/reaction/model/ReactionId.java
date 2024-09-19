@@ -1,5 +1,6 @@
 package ojosama.talkak.reaction.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,7 +8,9 @@ import java.util.Objects;
 @Embeddable
 public class ReactionId implements Serializable {
 
+    @Column(name = "member_id")
     private Long memberId;
+    @Column(name = "video_id")
     private Long videoId;
 
     // 기본 생성자

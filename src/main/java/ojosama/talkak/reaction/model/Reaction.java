@@ -19,11 +19,11 @@ public class Reaction {
     private boolean reaction;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "member", insertable = false, updatable = false)
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "video", insertable = false, updatable = false)
+    @JoinColumn(name = "video_id", insertable = false, updatable = false)
     private Video video;
 
     // Getters and setters
