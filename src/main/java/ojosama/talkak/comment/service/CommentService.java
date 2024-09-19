@@ -1,11 +1,14 @@
-package ojosama.talkak.comment;
+package ojosama.talkak.comment.service;
 
 import java.util.List;
-import ojosama.talkak.model.Comment;
-import ojosama.talkak.model.Member;
-import ojosama.talkak.user.MemberRepository;
-import ojosama.talkak.user.MemberResponse;
-import ojosama.talkak.video.VideoRepository;
+import ojosama.talkak.comment.dto.CommentRequest;
+import ojosama.talkak.comment.dto.CommentResponse;
+import ojosama.talkak.comment.model.Comment;
+import ojosama.talkak.comment.repository.CommentRepository;
+import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.repository.MemberRepository;
+import ojosama.talkak.member.dto.MemberResponse;
+import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 
 @Service

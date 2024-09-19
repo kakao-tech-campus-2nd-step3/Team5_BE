@@ -1,4 +1,4 @@
-package ojosama.talkak.model;
+package ojosama.talkak.reaction.model;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -6,7 +6,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import ojosama.talkak.reaction.ReactionId;
+import ojosama.talkak.member.model.Member;
+import ojosama.talkak.video.model.Video;
 
 @Entity
 @Table(name = "reaction")

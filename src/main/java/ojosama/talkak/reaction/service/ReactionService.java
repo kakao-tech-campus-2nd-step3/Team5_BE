@@ -1,10 +1,12 @@
-package ojosama.talkak.reaction;
+package ojosama.talkak.reaction.service;
 
-import ojosama.talkak.model.Member;
-import ojosama.talkak.model.Reaction;
-import ojosama.talkak.user.MemberRepository;
-import ojosama.talkak.model.Video;
-import ojosama.talkak.video.VideoRepository;
+import ojosama.talkak.member.model.Member;
+import ojosama.talkak.reaction.model.Reaction;
+import ojosama.talkak.reaction.model.ReactionId;
+import ojosama.talkak.reaction.repository.ReactionRepository;
+import ojosama.talkak.member.repository.MemberRepository;
+import ojosama.talkak.video.model.Video;
+import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 
 @Service
