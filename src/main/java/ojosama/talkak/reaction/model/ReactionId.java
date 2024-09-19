@@ -1,4 +1,4 @@
-package ojosama.talkak.reaction;
+package ojosama.talkak.reaction.model;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
