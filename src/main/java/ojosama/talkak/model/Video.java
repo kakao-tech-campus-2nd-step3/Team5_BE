@@ -32,5 +32,4 @@ public class Video {
     private boolean isPublic;
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
-
 }
