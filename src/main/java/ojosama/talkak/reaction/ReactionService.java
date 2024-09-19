@@ -1,9 +1,9 @@
 package ojosama.talkak.reaction;
 
-import java.util.Optional;
-import ojosama.talkak.user.Member;
+import ojosama.talkak.model.Member;
+import ojosama.talkak.model.Reaction;
 import ojosama.talkak.user.MemberRepository;
-import ojosama.talkak.video.Video;
+import ojosama.talkak.model.Video;
 import ojosama.talkak.video.VideoRepository;
 import org.springframework.stereotype.Service;
 

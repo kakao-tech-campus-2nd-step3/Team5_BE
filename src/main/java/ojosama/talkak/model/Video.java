@@ -1,4 +1,4 @@
-package ojosama.talkak.video;
+package ojosama.talkak.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,7 +11,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
-import ojosama.talkak.comment.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity

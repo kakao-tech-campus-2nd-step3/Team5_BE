@@ -1,8 +1,8 @@
 package ojosama.talkak.comment;
 
 import java.util.List;
-import java.util.Optional;
-import ojosama.talkak.user.Member;
+import ojosama.talkak.model.Comment;
+import ojosama.talkak.model.Member;
 import ojosama.talkak.user.MemberRepository;
 import ojosama.talkak.user.MemberResponse;
 import ojosama.talkak.video.VideoRepository;
