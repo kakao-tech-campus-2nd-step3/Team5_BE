@@ -2,13 +2,13 @@
   "items": [
     {
       "snippet": {
-        "title": "[풀버전 오디오] MBTI 보다 중요한 면BTI",
+        "title": "testTitle",
         "thumbnails": {
           "standard": {
-            "url": "https://i.ytimg.com/vi/ySrznInAJCk/sddefault.jpg"
+            "url": "testThumbnailsStandardUrl"
           }
         },
-        "channelTitle": "인생 녹음 중"
+        "channelTitle": "testUser"
       }
     }
   ]
