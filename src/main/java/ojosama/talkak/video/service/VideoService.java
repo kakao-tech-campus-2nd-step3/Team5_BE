@@ -17,7 +17,8 @@ public class VideoService {
 
     @Value("${youtube.api-key}")
     private String YOUTUBE_API_KEY;
-    private static final String YOUTUBE_API_BASE_URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet";
+    @Value("${youtube.api-url}")
+    private String YOUTUBE_API_BASE_URL;
 
     private final WebClientUtil webClientUtil;
 
@@ -41,6 +42,7 @@ public class VideoService {
     private String youtubeApiRequestUrlBuilder(String videoId) {
         StringBuilder youtubeApiRequestUrl = new StringBuilder();
         youtubeApiRequestUrl.append(YOUTUBE_API_BASE_URL)
+                .append("?part=snippet")
                 .append("&id=")
                 .append(videoId)
                 .append("&key=")
