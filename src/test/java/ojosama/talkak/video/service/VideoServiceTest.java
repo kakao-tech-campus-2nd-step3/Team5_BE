@@ -1,8 +1,8 @@
 package ojosama.talkak.video.service;
 
-import ojosama.talkak.video.exception.YoutubeValidationException;
+import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
-import ojosama.talkak.video.service.VideoService;
+import ojosama.talkak.video.util.IdExtractor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class VideoServiceTest {
+
     @Autowired
     private VideoService videoService;
+    private IdExtractor idExtractor = new IdExtractor();
 
     @Test
     @DisplayName("유효한 url 전달 시 videoId가 추출되어야 함")
@@ -37,7 +39,7 @@ public class VideoServiceTest {
 
         // then
         for (String url : urls) {
-            assertThat(videoService.extractVideoId(url)).isEqualTo(targetId);
+            assertThat(IdExtractor.extract(url)).isEqualTo(targetId);
         }
     }
 
@@ -54,7 +56,8 @@ public class VideoServiceTest {
 
         // then
         for (String url : urls) {
-            Assertions.assertThrows(YoutubeValidationException.class, () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequestDto(url)));
+            TalKakException exception = Assertions.assertThrows(TalKakException.class, () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequestDto(url)));
+            // exception msg 도 비교?
         }
     }
 }
