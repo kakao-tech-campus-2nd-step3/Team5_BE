@@ -25,4 +25,9 @@ public class AwsS3Controller {
     public AwsS3ResponseDto getPresignedUrlToDownload(@RequestBody AwsS3RequestDto awsS3RequestDto) {
         return awsS3Service.getPresignedUrlToDownload(awsS3RequestDto);
     }
+
+    @PostMapping("/presigned/delete")
+    public AwsS3ResponseDto getPresignedUrlToDelete(@RequestBody AwsS3RequestDto awsS3RequestDto) {
+        return awsS3Service.getPresignedUrlToDelete(awsS3RequestDto);
+    }
 }

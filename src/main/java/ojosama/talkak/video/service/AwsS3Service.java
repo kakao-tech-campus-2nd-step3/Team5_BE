@@ -39,6 +39,15 @@ public class AwsS3Service {
         return new AwsS3ResponseDto(amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString());
     }
 
+    public AwsS3ResponseDto getPresignedUrlToDelete(AwsS3RequestDto request) {
+        String filename = request.filename();
+        Date expirationTime = getExpirationTime();
+        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucket, filename)
+                .withMethod(HttpMethod.DELETE)
+                .withExpiration(expirationTime);
+        return new AwsS3ResponseDto(amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString());
+    }
+
     public static Date getExpirationTime() {
         Date expiration = new Date();
         long expTime = expiration.getTime();
