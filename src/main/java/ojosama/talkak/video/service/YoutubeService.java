@@ -11,12 +11,9 @@ import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.video.dto.YoutubeCategoryRequest;
 import ojosama.talkak.video.dto.YoutubeResponse;
 import ojosama.talkak.video.util.WebClientUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @PropertySource("classpath:application.properties")
@@ -31,7 +28,6 @@ public class YoutubeService {
     }
     private static final String YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search";
     // 특정 카테고리가 없는 전체 유튜브 쇼츠 추출
-    @Cacheable("youtubeShorts")
     public List<YoutubeResponse> getPopularShorts() throws IOException {
         // 필요한 값들만 불러오도록 최소한의 필드 요청
         String url = YOUTUBE_API_URL + "?part=snippet&fields=items(id(videoId),snippet(publishedAt, title, channelId, thumbnails(default(url))))&q=쇼츠&type=video&key="

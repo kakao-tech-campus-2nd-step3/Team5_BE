@@ -2,6 +2,7 @@ package ojosama.talkak.video.controller;
 
 import java.io.IOException;
 import java.util.List;
+import ojosama.talkak.video.dto.YoutubeCategoryRequest;
 import ojosama.talkak.video.dto.YoutubeResponse;
 import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
 import ojosama.talkak.video.dto.YoutubeUrlValidationResponseDto;
@@ -36,9 +37,10 @@ public class VideoController {
     }
 
     // 메인페이지에서 유튜브 관련 영상 불러오기(카테고리 지정)
-    @GetMapping("/youtube/{category}")
-    public ResponseEntity<List<YoutubeResponse>> getPopularYoutubeShortsByCategory(@PathVariable("category") String category) throws IOException {
-        List<YoutubeResponse> response =  youtubeService.getShortsByCategory(category);
+    @GetMapping("/youtube/{categoryId}")
+    public ResponseEntity<List<YoutubeResponse>> getPopularYoutubeShortsByCategory(@PathVariable("categoryId")
+        YoutubeCategoryRequest youtubeCategoryRequest) throws IOException {
+        List<YoutubeResponse> response =  youtubeService.getShortsByCategory(youtubeCategoryRequest);
         return ResponseEntity.ok(response);
     }
 
