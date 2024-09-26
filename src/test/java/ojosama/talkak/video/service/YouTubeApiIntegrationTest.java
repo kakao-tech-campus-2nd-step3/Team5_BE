@@ -1,7 +1,7 @@
 package ojosama.talkak.video.service;
 
-import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
-import ojosama.talkak.video.dto.YoutubeUrlValidationResponseDto;
+import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
+import ojosama.talkak.video.dto.YoutubeUrlValidationResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,9 @@ public class YouTubeApiIntegrationTest {
 
     @Test
     @DisplayName("유튜브 url로 정보 가져오기 성공 테스트")
-    void getYoutubeVideoInfoTest() throws IOException {
+    void getYoutubeVideoInfoSuccessTest() throws IOException {
         String videoId = "ySrznInAJCk";
-        String expectedResponse = getMockResponseByPath("payload/get-youtube-api-response.json");
+        String expectedResponse = getMockResponseByPath("payload/get-youtube-api-success-response.json");
 
         stubFor(get(urlEqualTo(String.format("/?part=snippet&id=%s&key=%s", videoId, YOUTUBE_API_KEY)))
                 .willReturn(aResponse()
@@ -49,12 +49,35 @@ public class YouTubeApiIntegrationTest {
                 )
         );
 
-        YoutubeUrlValidationResponseDto response = videoService.validateYoutubeUrl(new YoutubeUrlValidationRequestDto(String.format("https://www.youtube.com/watch?v=%s", videoId)));
+        YoutubeUrlValidationResponse response = videoService.validateYoutubeUrl(new YoutubeUrlValidationRequest(String.format("https://www.youtube.com/watch?v=%s", videoId)));
 
         assertAll(
                 () -> assertThat(response.title()).isEqualTo("testTitle"),
                 () -> assertThat(response.user()).isEqualTo("testUser"),
                 () -> assertThat(response.url()).isEqualTo("testThumbnailsStandardUrl")
+        );
+    }
+
+    @Test
+    @DisplayName("유튜브 url로 정보 가져오기 실패 테스트 - 특정 필드(url)가 존재하지 않는 경우")
+    void getYoutubeVideoInfoFailTest() throws IOException {
+        String videoId = "ySrznInAJCk";
+        String expectedResponse = getMockResponseByPath("payload/get-youtube-api-fail-response.json");
+
+        stubFor(get(urlEqualTo(String.format("/?part=snippet&id=%s&key=%s", videoId, YOUTUBE_API_KEY)))
+                .willReturn(aResponse()
+                        .withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(expectedResponse)
+                )
+        );
+
+        YoutubeUrlValidationResponse response = videoService.validateYoutubeUrl(new YoutubeUrlValidationRequest(String.format("https://www.youtube.com/watch?v=%s", videoId)));
+
+        assertAll(
+                () -> assertThat(response.title()).isEqualTo("testTitle"),
+                () -> assertThat(response.user()).isEqualTo("testUser"),
+                () -> assertThat(response.url()).isNull()
         );
     }
 
