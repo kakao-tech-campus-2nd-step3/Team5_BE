@@ -49,7 +49,7 @@ public class VideoService {
 
     private String extractVideoIdOrThrow(String url) {
         String videoId = Optional.ofNullable(IdExtractor.extract(url))
-                .orElseThrow(() -> new TalKakException(VideoError.INVALID_VIDEO_ID));
+                .orElseThrow(() -> TalKakException.of(VideoError.INVALID_VIDEO_ID));
         return videoId;
     }
 }
