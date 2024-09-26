@@ -1,15 +1,15 @@
 package ojosama.talkak.video.service;
 
 import ojosama.talkak.common.exception.TalKakException;
-import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
+import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
 import ojosama.talkak.video.util.IdExtractor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class VideoServiceTest {
@@ -56,8 +56,8 @@ public class VideoServiceTest {
 
         // then
         for (String url : urls) {
-            TalKakException exception = Assertions.assertThrows(TalKakException.class, () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequestDto(url)));
-            // exception msg 도 비교?
+            TalKakException exception = assertThrows(TalKakException.class, () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequest(url)));
+            assertThat(exception.getMessage()).isEqualTo("유효하지 않은 videoId입니다.");
         }
     }
 }
