@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 public enum VideoError implements ErrorCode {
 
     /* 400 Bad Request */
-    VIDEO_NOT_FOUND(HttpStatus.BAD_REQUEST, "V001", "존재하지 않는 영상입니다.");
+    INVALID_VIDEO_ID(HttpStatus.BAD_REQUEST, "V001", "유효하지 않은 videoId입니다."),
+    YOUTUBE_API_BAD_REQUEST(HttpStatus.BAD_REQUEST, "V002", "유효하지 않은 유튜브 요청입니다.");
 
     private final HttpStatus status;
     private final String code;
