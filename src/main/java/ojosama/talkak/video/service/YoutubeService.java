@@ -8,10 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import ojosama.talkak.category.repository.CategoryRepository;
-import ojosama.talkak.video.dto.YoutubeCategoryRequest;
 import ojosama.talkak.video.dto.YoutubeApiResponse;
+import ojosama.talkak.video.dto.YoutubeCategoryRequest;
 import ojosama.talkak.video.util.WebClientUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,9 @@ public class YoutubeService {
         this.webClientUtil = webClientUtil;
     }
     private static final String YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search";
+
     // 특정 카테고리가 없는 전체 유튜브 쇼츠 추출
+    @Cacheable(value = "youtubeShortsCache")
     public List<YoutubeApiResponse> getPopularShorts() throws IOException {
         // 필요한 값들만 불러오도록 최소한의 필드 요청
         String url = YOUTUBE_API_URL + "?part=snippet&fields=items(id(videoId),snippet(publishedAt, title, channelId, thumbnails(default(url))))&q=쇼츠&type=video&key="
@@ -38,6 +41,7 @@ public class YoutubeService {
     }
 
     // 특정 카테고리의 유튜브 쇼츠 추출
+    @Cacheable(value = "youtubeCategoryShortsCache")
     public List<YoutubeApiResponse> getShortsByCategory(YoutubeCategoryRequest youtubeCategoryRequest) throws IOException {
         String categoryName = categoryRepository.findCategoryById(
             youtubeCategoryRequest.categoryId());
