@@ -57,7 +57,7 @@ public class VideoServiceTest {
         // then
         for (String url : urls) {
             TalKakException exception = assertThrows(TalKakException.class, () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequest(url)));
-            assertThat(exception.getMessage()).isEqualTo("유효하지 않은 videoId입니다.");
+            assertThat(exception.code()).isEqualTo("V001");
         }
     }
 }
