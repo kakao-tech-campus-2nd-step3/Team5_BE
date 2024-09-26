@@ -2,9 +2,9 @@ package ojosama.talkak.video.service;
 
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.VideoError;
-import ojosama.talkak.video.dto.YoutubeUrlValidationAPIResponseDto;
-import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
-import ojosama.talkak.video.dto.YoutubeUrlValidationResponseDto;
+import ojosama.talkak.video.dto.YoutubeUrlValidationAPIResponse;
+import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
+import ojosama.talkak.video.dto.YoutubeUrlValidationResponse;
 import ojosama.talkak.video.util.IdExtractor;
 import ojosama.talkak.video.util.WebClientUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,17 +26,14 @@ public class VideoService {
         this.webClientUtil = webClientUtil;
     }
 
-    public YoutubeUrlValidationResponseDto validateYoutubeUrl(YoutubeUrlValidationRequestDto req) {
-        String url = req.url();
-        String videoId = Optional.ofNullable(IdExtractor.extract(url))
-                .orElseThrow(() -> new TalKakException(VideoError.INVALID_VIDEO_ID));
-
+    public YoutubeUrlValidationResponse validateYoutubeUrl(YoutubeUrlValidationRequest req) {
+        String videoId = extractVideoIdOrThrow(req.url());
 
         String YOUTUBE_API_URL = youtubeApiRequestUrlBuilder(videoId);
 
-        YoutubeUrlValidationAPIResponseDto response = webClientUtil.get(YOUTUBE_API_URL, YoutubeUrlValidationAPIResponseDto.class);
+        YoutubeUrlValidationAPIResponse response = webClientUtil.get(YOUTUBE_API_URL, YoutubeUrlValidationAPIResponse.class);
 
-        return new YoutubeUrlValidationResponseDto(response);
+        return new YoutubeUrlValidationResponse(response);
     }
 
     private String youtubeApiRequestUrlBuilder(String videoId) {
@@ -48,5 +45,11 @@ public class VideoService {
                 .append("&key=")
                 .append(YOUTUBE_API_KEY);
         return youtubeApiRequestUrl.toString();
+    }
+
+    private String extractVideoIdOrThrow(String url) {
+        String videoId = Optional.ofNullable(IdExtractor.extract(url))
+                .orElseThrow(() -> TalKakException.of(VideoError.INVALID_VIDEO_ID));
+        return videoId;
     }
 }

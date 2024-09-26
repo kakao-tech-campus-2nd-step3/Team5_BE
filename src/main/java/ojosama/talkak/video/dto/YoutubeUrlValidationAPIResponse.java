@@ -2,7 +2,7 @@ package ojosama.talkak.video.dto;
 
 import java.util.List;
 
-public record YoutubeUrlValidationAPIResponseDto(
+public record YoutubeUrlValidationAPIResponse(
         List<YoutubeUrlValidationResponseDtoSnippet> items
 ) {
     public record YoutubeUrlValidationResponseDtoSnippet(

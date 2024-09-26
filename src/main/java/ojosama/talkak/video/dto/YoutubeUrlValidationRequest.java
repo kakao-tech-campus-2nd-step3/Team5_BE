@@ -1,6 +1,6 @@
 package ojosama.talkak.video.dto;
 
-public record YoutubeUrlValidationRequestDto(
+public record YoutubeUrlValidationRequest(
         String url
 ) {
 }

@@ -1,8 +1,8 @@
 package ojosama.talkak.video.dto;
 
-public record YoutubeUrlValidationResponseDto(String title, String user, String url) {
-    public YoutubeUrlValidationResponseDto(
-            YoutubeUrlValidationAPIResponseDto response
+public record YoutubeUrlValidationResponse(String title, String user, String url) {
+    public YoutubeUrlValidationResponse(
+            YoutubeUrlValidationAPIResponse response
     ) {
         this(
                 response.items().get(0).snippet().title(),
