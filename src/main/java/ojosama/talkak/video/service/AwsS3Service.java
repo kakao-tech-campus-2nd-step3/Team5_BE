@@ -4,8 +4,8 @@ import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import lombok.RequiredArgsConstructor;
-import ojosama.talkak.video.dto.AwsS3RequestDto;
-import ojosama.talkak.video.dto.AwsS3ResponseDto;
+import ojosama.talkak.video.dto.AwsS3Request;
+import ojosama.talkak.video.dto.AwsS3Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,31 +21,28 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public AwsS3ResponseDto getPresignedUrlToUpload(AwsS3RequestDto request) {
-        String filename = request.filename();
-        Date expirationTime = getExpirationTime();
-        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucket, filename)
-                .withMethod(HttpMethod.PUT)
-                .withExpiration(expirationTime);
-        return new AwsS3ResponseDto(amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString());
+    public AwsS3Response getPresignedUrlToUpload(AwsS3Request request) {
+        GeneratePresignedUrlRequest presignedUrlRequest = generatePresignedUrlRequest(request, HttpMethod.PUT);
+        return new AwsS3Response(amazonS3.generatePresignedUrl(presignedUrlRequest).toString());
     }
 
-    public AwsS3ResponseDto getPresignedUrlToDownload(AwsS3RequestDto request) {
-        String filename = request.filename();
-        Date expirationTime = getExpirationTime();
-        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucket, filename)
-                .withMethod(HttpMethod.GET)
-                .withExpiration(expirationTime);
-        return new AwsS3ResponseDto(amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString());
+    public AwsS3Response getPresignedUrlToDownload(AwsS3Request request) {
+        GeneratePresignedUrlRequest presignedUrlRequest = generatePresignedUrlRequest(request, HttpMethod.GET);
+        return new AwsS3Response(amazonS3.generatePresignedUrl(presignedUrlRequest).toString());
     }
 
-    public AwsS3ResponseDto getPresignedUrlToDelete(AwsS3RequestDto request) {
+    public AwsS3Response getPresignedUrlToDelete(AwsS3Request request) {
+        GeneratePresignedUrlRequest presignedUrlRequest = generatePresignedUrlRequest(request, HttpMethod.DELETE);
+        return new AwsS3Response(amazonS3.generatePresignedUrl(presignedUrlRequest).toString());
+    }
+
+    public GeneratePresignedUrlRequest generatePresignedUrlRequest(AwsS3Request request, HttpMethod httpMethod) {
         String filename = request.filename();
         Date expirationTime = getExpirationTime();
-        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucket, filename)
-                .withMethod(HttpMethod.DELETE)
+        GeneratePresignedUrlRequest presignedUrlRequest = new GeneratePresignedUrlRequest(bucket, filename)
+                .withMethod(httpMethod)
                 .withExpiration(expirationTime);
-        return new AwsS3ResponseDto(amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString());
+        return presignedUrlRequest;
     }
 
     public static Date getExpirationTime() {
