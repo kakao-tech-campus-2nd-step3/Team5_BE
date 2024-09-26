@@ -27,10 +27,8 @@ public class VideoService {
     }
 
     public YoutubeUrlValidationResponse validateYoutubeUrl(YoutubeUrlValidationRequest req) {
-        String url = req.url();
-        String videoId = Optional.ofNullable(IdExtractor.extract(url))
-                .orElseThrow(() -> new TalKakException(VideoError.INVALID_VIDEO_ID));
-        
+        String videoId = extractVideoIdOrThrow(req.url());
+
         String YOUTUBE_API_URL = youtubeApiRequestUrlBuilder(videoId);
 
         YoutubeUrlValidationAPIResponse response = webClientUtil.get(YOUTUBE_API_URL, YoutubeUrlValidationAPIResponse.class);
@@ -47,5 +45,11 @@ public class VideoService {
                 .append("&key=")
                 .append(YOUTUBE_API_KEY);
         return youtubeApiRequestUrl.toString();
+    }
+
+    private String extractVideoIdOrThrow(String url) {
+        String videoId = Optional.ofNullable(IdExtractor.extract(url))
+                .orElseThrow(() -> new TalKakException(VideoError.INVALID_VIDEO_ID));
+        return videoId;
     }
 }
