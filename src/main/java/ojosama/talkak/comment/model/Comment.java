@@ -28,19 +28,12 @@ public class Comment {
     public Comment() {
     }
 
-    public void setContent(String content) {
+    public Comment(Member member, Video video, String content) {
+        this.member = member;
+        this.video = video;
         this.content = content;
     }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -51,4 +44,14 @@ public class Comment {
     public Member getMember() {
         return member;
     }
+    public Video getVideo() {
+        return video;
+    }
+    public void updateContent(String newContent) {
+        this.content = newContent;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }
