@@ -22,7 +22,7 @@ public class Member {
     private String username;
     private String imageUrl;
     private String email;
-    private boolean gender;
+    private Boolean gender;
     private Integer age;
     @Enumerated(EnumType.STRING)
     private MembershipTier membership;

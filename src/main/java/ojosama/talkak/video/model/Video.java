@@ -30,7 +30,7 @@ public class Video {
 
     private Long categoryId;
     private String thumbnail;
-    private boolean isPublic;
+    private Boolean isPublic;
     private Long countLikes;
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;

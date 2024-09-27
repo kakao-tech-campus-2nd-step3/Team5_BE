@@ -16,7 +16,7 @@ public class Reaction {
     @EmbeddedId
     private ReactionId id;  // 복합 키를 포함하는 필드
 
-    private boolean reaction;
+    private Boolean reaction;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
@@ -38,7 +38,7 @@ public class Reaction {
         return id;
     }
 
-    public boolean isReaction() {
+    public Boolean isReaction() {
         return reaction;
     }
 
