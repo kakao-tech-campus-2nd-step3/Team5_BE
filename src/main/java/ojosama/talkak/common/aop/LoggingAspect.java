@@ -32,13 +32,13 @@ public class LoggingAspect {
     public Object logRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
         long start = System.currentTimeMillis();
-        log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
+        log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
             joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
         try {
             result = joinPoint.proceed();
         } finally {
             long end = System.currentTimeMillis();
-            log.info("Exit : {}.{}() with result = {} ({}ms)", joinPoint.getSignature().getDeclaringTypeName(),
+            log.debug("Exit : {}.{}() with result = {} ({}ms)", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), result, end - start);
         }
         return result;
