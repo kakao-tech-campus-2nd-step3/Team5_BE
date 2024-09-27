@@ -27,7 +27,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<CommentResponse> createComment(
-        @PathVariable("video_id") Long videoId,
+        @PathVariable("videoId") Long videoId,
         @RequestHeader("memberId") Long memberId,
         @RequestBody CommentRequest commentRequest) {
         return ResponseEntity.ok(commentService.createComment(videoId, memberId, commentRequest));
@@ -39,16 +39,16 @@ public class CommentController {
         return ResponseEntity.ok().body(comments);
     }
 
-    @PutMapping("/{comment_id}")
+    @PutMapping("/{commentId}")
     public ResponseEntity<String> updateComment(
-        @PathVariable("comment_id") Long commentId,
+        @PathVariable("commentId") Long commentId,
         @RequestHeader("memberId") Long memberId,
         @RequestBody CommentRequest commentRequest) {
         commentService.updateComment(commentId, memberId, commentRequest);
         return ResponseEntity.ok("Comment updated successfully");
     }
 
-    @DeleteMapping("/{comment_id}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<String> deleteComment(
         @PathVariable("comment_id") Long commentId,
         @RequestHeader("memberId") Long memberId) {
