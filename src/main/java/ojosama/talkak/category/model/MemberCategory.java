@@ -32,4 +32,10 @@ public class MemberCategory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, insertable = false, updatable = false)
     private Category category;
+
+    public MemberCategory(Member member, Category category) {
+        this.id = new MemberCategoryId(member.getId(), category.getId());
+        this.member = member;
+        this.category = category;
+    }
 }

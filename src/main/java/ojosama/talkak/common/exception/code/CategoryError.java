@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum MemberError implements ErrorCode {
+public enum CategoryError implements ErrorCode{
 
-    NOT_EXISTING_MEMBER(HttpStatus.NOT_FOUND, "M001", "존재하지 않는 회원입니다."),
-    ERROR_UPDATE_MEMBER_INFO(HttpStatus.BAD_REQUEST, "M002", "회원 정보를 수정하는데 오류가 발생하였습니다.");
+    NOT_EXISTING_CATEGORY(HttpStatus.NOT_FOUND, "C001", "존재하지 않는 카테고리입니다.");
 
     private final HttpStatus status;
     private final String code;
@@ -27,4 +26,5 @@ public enum MemberError implements ErrorCode {
     public String message() {
         return message;
     }
+
 }
