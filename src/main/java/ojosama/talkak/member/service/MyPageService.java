@@ -48,25 +48,22 @@ public class MyPageService {
             memberId);
         memberCategories.removeIf(
             mc -> request.categories().stream().noneMatch(
-                c -> c.equals(mc.getCategory().getCategory())
+                c -> c.equals(mc.getCategory().getName())
             )
         );
 
-        // 새롭게 추가되는 카테고리가 무엇인지 찾음
-        List<String> newAddedCategories = request.categories().stream()
+        // 새롭게 추가되는 카테고리가 무엇인지 찾고, 새롭게 추가되는 카테고리를 리스트에 추가
+        List<MemberCategory> newMemberCategories = request.categories().stream()
             .filter(
                 c -> memberCategories.stream().noneMatch(
-                    mc -> mc.getCategory().getCategory().equals(c)
+                    mc -> mc.getCategory().getName().equals(c)
                 )
-            ).toList();
-
-        // 새롭게 추가되는 카테고리를 리스트에 추가
-        List<MemberCategory> newMemberCategories = newAddedCategories.stream()
-            .map(c -> {
-                Category category = categoryRepository.findByCategory(c)
+            ).map(c -> {
+                Category category = categoryRepository.findByName(c)
                     .orElseThrow(() -> TalKakException.of(CategoryError.NOT_EXISTING_CATEGORY));
                 return memberCategoryRepository.save(new MemberCategory(member, category));
-            }).toList();
+            })
+            .toList();
 
         memberCategories.addAll(newMemberCategories);
 
