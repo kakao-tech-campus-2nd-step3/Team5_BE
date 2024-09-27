@@ -2,7 +2,6 @@ package ojosama.talkak.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +16,6 @@ import ojosama.talkak.member.dto.MyPageInfoRequest;
 import ojosama.talkak.member.dto.MyPageInfoResponse;
 import ojosama.talkak.member.model.Member;
 import ojosama.talkak.member.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,10 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class MemberServiceTest {
+class MyPageServiceTest {
 
     @Autowired
-    private MemberService memberService;
+    private MyPageService myPageService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
@@ -70,7 +68,7 @@ class MemberServiceTest {
     @DisplayName("마이페이지 개인정보 가져오기")
     @Test
     void getMemberInfo() {
-        MyPageInfoResponse memberInfo = memberService.getMemberInfo(member.getId());
+        MyPageInfoResponse memberInfo = myPageService.getMemberInfo(member.getId());
         assertThat(memberInfo.gender()).isEqualTo("남자");
         assertThat(memberInfo.age()).isEqualTo(20);
         assertThat(memberInfo.categories().size()).isEqualTo(3);
@@ -88,7 +86,7 @@ class MemberServiceTest {
     void updateMemberInfo() {
         MyPageInfoRequest request = new MyPageInfoRequest("여자", 20,
             Arrays.asList("음식", "음악", "스포츠"));
-        MyPageInfoResponse memberInfo = memberService.updateMemberInfo(member.getId(), request);
+        MyPageInfoResponse memberInfo = myPageService.updateMemberInfo(member.getId(), request);
 
         assertThat(memberInfo.gender()).isEqualTo("여자");
         assertThat(memberInfo.age()).isEqualTo(20);
@@ -101,7 +99,7 @@ class MemberServiceTest {
     void invalidGender() {
         MyPageInfoRequest request = new MyPageInfoRequest("@@@", 20,
             Arrays.asList("음식", "음악", "스포츠"));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
+        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
     }
@@ -111,19 +109,19 @@ class MemberServiceTest {
     void invalidAge() {
         MyPageInfoRequest request = new MyPageInfoRequest("여자", null,
             Arrays.asList("음식", "음악", "스포츠"));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
+        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
 
         MyPageInfoRequest request2 = new MyPageInfoRequest("여자", 9,
             Arrays.asList("음식", "음악", "스포츠"));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request2))
+        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request2))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
 
         MyPageInfoRequest request3 = new MyPageInfoRequest("여자", 101,
             Arrays.asList("음식", "음악", "스포츠"));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request2))
+        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request2))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
     }
@@ -133,7 +131,7 @@ class MemberServiceTest {
     void invalidCategories() {
         MyPageInfoRequest request = new MyPageInfoRequest("여자", 20,
             Arrays.asList("음식", "음악"));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
+        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
     }

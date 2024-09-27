@@ -15,13 +15,13 @@ import ojosama.talkak.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MemberService {
+public class MyPageService {
 
     private final MemberRepository memberRepository;
     private final MemberCategoryRepository memberCategoryRepository;
     private final CategoryRepository categoryRepository;
 
-    public MemberService(MemberRepository memberRepository,
+    public MyPageService(MemberRepository memberRepository,
         MemberCategoryRepository memberCategoryRepository, CategoryRepository categoryRepository) {
         this.memberRepository = memberRepository;
         this.memberCategoryRepository = memberCategoryRepository;
@@ -42,6 +42,7 @@ public class MemberService {
             .orElseThrow(() -> TalKakException.of(MemberError.NOT_EXISTING_MEMBER));
         member.updateMemberInfo(request.gender(), request.age());
 
+        // 새로 변경되는 카테고리 리스트에 존재하지 않는 기존 카테고리를 리스트에서 삭제
         MemberCategory.isValidCategories(request.categories());
         List<MemberCategory> memberCategories = memberCategoryRepository.findAllByMemberId(
             memberId);
@@ -51,6 +52,7 @@ public class MemberService {
             )
         );
 
+        // 새롭게 추가되는 카테고리가 무엇인지 찾음
         List<String> newAddedCategories = request.categories().stream()
             .filter(
                 c -> memberCategories.stream().noneMatch(
@@ -58,6 +60,7 @@ public class MemberService {
                 )
             ).toList();
 
+        // 새롭게 추가되는 카테고리를 리스트에 추가
         List<MemberCategory> newMemberCategories = newAddedCategories.stream()
             .map(c -> {
                 Category category = categoryRepository.findByCategory(c)
