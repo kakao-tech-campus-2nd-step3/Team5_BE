@@ -27,6 +27,11 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public Member(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
     public long getId() {
         return id;
     }
