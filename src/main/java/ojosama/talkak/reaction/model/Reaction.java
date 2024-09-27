@@ -26,36 +26,27 @@ public class Reaction {
     @JoinColumn(name = "video_id", insertable = false, updatable = false)
     private Video video;
 
+    public Reaction(ReactionId reactionId, Member member, Video video, boolean reactionType) {
+        this.id = reactionId;
+        this.member = member;
+        this.video = video;
+        this.reaction = reactionType;
+    }
+
     // Getters and setters
     public ReactionId getId() {
         return id;
-    }
-
-    public void setId(ReactionId id) {
-        this.id = id;
     }
 
     public boolean isReaction() {
         return reaction;
     }
 
-    public void setReaction(boolean reaction) {
-        this.reaction = reaction;
-    }
-
     public Member getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
     public Video getVideo() {
         return video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
     }
 }
