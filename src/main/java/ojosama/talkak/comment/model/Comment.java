@@ -50,7 +50,7 @@ public class Comment {
     public void updateContent(String newContent) {
         this.content = newContent;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

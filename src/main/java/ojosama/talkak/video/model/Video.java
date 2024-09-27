@@ -28,14 +28,14 @@ public class Video {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    private long categoryId;
+    private Long categoryId;
     private String thumbnail;
     private boolean isPublic;
-    private long countLikes;
+    private Long countLikes;
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    public Video(Long id, String title, int countLikes) {
+    public Video(Long id, String title, Long countLikes) {
         this.id = id;
         this.title = title;
         this.countLikes = countLikes;
