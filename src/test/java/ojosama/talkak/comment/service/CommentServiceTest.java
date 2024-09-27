@@ -47,8 +47,7 @@ public class CommentServiceTest {
         MockitoAnnotations.openMocks(this);
         member = new Member(1L, "username");
         video = new Video(1L, "video title", 0L);
-        comment = new Comment(member, video, "This is a comment.");
-        comment.setId(1L);
+        comment = new Comment(1L, member, video, "This is a comment.");
     }
 
     @Test

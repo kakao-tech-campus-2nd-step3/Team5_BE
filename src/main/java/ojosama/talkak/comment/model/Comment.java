@@ -33,6 +33,14 @@ public class Comment {
         this.video = video;
         this.content = content;
     }
+
+    public Comment(Long id, Member member, Video video, String content) {
+        this.id = id;
+        this.member = member;
+        this.video = video;
+        this.content = content;
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,9 +57,6 @@ public class Comment {
     }
     public void updateContent(String newContent) {
         this.content = newContent;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
 
 }
