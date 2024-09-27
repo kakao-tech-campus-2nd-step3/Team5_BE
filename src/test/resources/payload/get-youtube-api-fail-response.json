@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "snippet": {
+        "title": "testTitle",
+        "thumbnails": {
+          "standard": {
+          }
+        },
+        "channelTitle": "testUser"
+      }
+    }
+  ]
+}

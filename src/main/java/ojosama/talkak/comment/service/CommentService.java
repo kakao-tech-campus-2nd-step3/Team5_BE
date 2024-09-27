@@ -1,13 +1,17 @@
 package ojosama.talkak.comment.service;
 
 import java.util.List;
+import java.util.Objects;
 import ojosama.talkak.comment.dto.CommentRequest;
 import ojosama.talkak.comment.dto.CommentResponse;
 import ojosama.talkak.comment.model.Comment;
 import ojosama.talkak.comment.repository.CommentRepository;
+import ojosama.talkak.common.exception.TalKakException;
+import ojosama.talkak.common.exception.code.CommentError;
 import ojosama.talkak.member.model.Member;
 import ojosama.talkak.member.repository.MemberRepository;
 import ojosama.talkak.member.dto.MemberResponse;
+import ojosama.talkak.video.model.Video;
 import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +29,12 @@ public class CommentService {
         this.videoRepository = videoRepository;
     }
 
-    public CommentResponse addComment(long memberId, long videoId, CommentRequest commentRequest) {
-        Comment comment = new Comment();
-        comment.setMember(memberRepository.findById(memberId).orElseThrow());
-        comment.setVideo(videoRepository.findById(videoId).orElseThrow());
-        comment.setContent(commentRequest.content());
+    public CommentResponse createComment(long memberId, long videoId, CommentRequest commentRequest) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> TalKakException.of(CommentError.INVALID_MEMBER_ID));
+        Video video = videoRepository.findById(videoId)
+            .orElseThrow(() -> TalKakException.of(CommentError.INVALID_VIDEO_ID));
+        Comment comment = new Comment(member, video, commentRequest.content());
         return convertToDTO(commentRepository.save(comment));
     }
 
@@ -40,8 +45,28 @@ public class CommentService {
             .toList();
     }
 
+    public CommentResponse updateComment(Long commentId, Long memberId, CommentRequest commentRequest) {
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> TalKakException.of(CommentError.INVALID_COMMENT_ID));
+        if (!Objects.equals(comment.getMember().getId(), memberId)) {
+            throw TalKakException.of(CommentError.UNAUTHORIZED_USER);
+        }
+        comment.updateContent(commentRequest.content());
+        return convertToDTO(commentRepository.save(comment));
+    }
+
+    public void deleteComment(Long commentId, Long memberId) {
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> TalKakException.of(CommentError.INVALID_COMMENT_ID));
+        if (!Objects.equals(comment.getMember().getId(), memberId)) {
+            throw TalKakException.of(CommentError.UNAUTHORIZED_USER);
+        }
+        commentRepository.delete(comment);
+    }
+
     private CommentResponse convertToDTO(Comment comment) {
-        Member member = comment.getMember();
+        Member member = memberRepository.findById(comment.getMember().getId())
+            .orElseThrow(() -> TalKakException.of(CommentError.INVALID_MEMBER_ID));
         MemberResponse memberResponse = new MemberResponse(member.getId(),
             member.getImageUrl(), member.getUsername());
         return new CommentResponse(comment.getId(), memberResponse, comment.getContent());

@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum VideoError implements ErrorCode {
-
-    /* 400 Bad Request */
-    INVALID_VIDEO_ID(HttpStatus.BAD_REQUEST, "V001", "유효하지 않은 videoId입니다."),
-    YOUTUBE_API_BAD_REQUEST(HttpStatus.BAD_REQUEST, "V002", "유효하지 않은 유튜브 요청입니다.");
+public enum ReactionError implements ErrorCode {
+    UNAUTHORIZED_USER(HttpStatus.BAD_REQUEST, "R001", "인증되지 않은 유저입니다."),
+    INVALID_MEMBER_ID(HttpStatus.BAD_REQUEST, "R002", "유효하지 않은 memberId 입니다."),
+    INVALID_VIDEO_ID(HttpStatus.BAD_REQUEST, "R003", "유효하지 않은 videoID 입니다.");
 
     private final HttpStatus status;
     private final String code;

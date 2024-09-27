@@ -1,10 +1,12 @@
 package ojosama.talkak.reaction.service;
 
+import ojosama.talkak.common.exception.TalKakException;
+import ojosama.talkak.common.exception.code.ReactionError;
 import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.repository.MemberRepository;
 import ojosama.talkak.reaction.model.Reaction;
 import ojosama.talkak.reaction.model.ReactionId;
 import ojosama.talkak.reaction.repository.ReactionRepository;
-import ojosama.talkak.member.repository.MemberRepository;
 import ojosama.talkak.video.model.Video;
 import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
@@ -23,21 +25,28 @@ public class ReactionService {
         this.videoRepository = videoRepository;
     }
 
-    public Reaction addOrUpdateReaction(Long memberId, Long videoId, boolean reactionType) {
+    public void toggleLike(Long videoId, Long memberId) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> TalKakException.of(ReactionError.INVALID_MEMBER_ID));
+        Video video = videoRepository.findById(videoId)
+            .orElseThrow(() -> TalKakException.of(ReactionError.INVALID_VIDEO_ID));
+
         ReactionId reactionId = new ReactionId(memberId, videoId);
-        Reaction reaction = reactionRepository.findById(reactionId)
-            .orElse(new Reaction());
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        Video video = videoRepository.findById(videoId).orElseThrow();
-        reaction.setMember(member);
-        reaction.setVideo(video);
-        reaction.setReaction(reactionType);
+        Reaction existingReaction = reactionRepository.findById(reactionId)
+            .orElse(null);
 
-        return reactionRepository.save(reaction);
+        if (existingReaction != null) {
+            handleExistingReaction(existingReaction, video);
+        } else {
+            Reaction newReaction = new Reaction(reactionId, member, video, true);
+            reactionRepository.save(newReaction);
+            video.incrementLikes();
+        }
+        videoRepository.save(video);
     }
 
-    public void deleteReaction(Long memberId, Long videoId) {
-        reactionRepository.deleteById(new ReactionId(memberId, videoId));
+    private void handleExistingReaction(Reaction existingReaction, Video video) {
+        reactionRepository.delete(existingReaction);
+        video.decrementLikes();
     }
-
 }
