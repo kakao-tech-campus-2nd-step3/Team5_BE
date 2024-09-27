@@ -1,6 +1,7 @@
 package ojosama.talkak.comment.repository;
 
 import java.util.List;
+import java.util.Optional;
 import ojosama.talkak.comment.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByVideoId(long videoId);
-    Comment findByMemberIdAndVideoId(long memberId, long videoId);
 }
