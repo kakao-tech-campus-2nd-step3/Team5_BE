@@ -24,6 +24,7 @@ import ojosama.talkak.common.exception.code.MemberError;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +39,10 @@ public class Member {
     private List<Comment> comments;
 
     public void updateMemberInfo(String gender, Integer age) {
-        // validation 기능 추후 구현 필요
+        if (!gender.matches("남자|여자") || age == null || age < 10 || age > 100) {
+            throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
+        }
+
         this.gender = !gender.equals("남자");
         this.age = age;
     }

@@ -42,6 +42,7 @@ public class MemberService {
             .orElseThrow(() -> TalKakException.of(MemberError.NOT_EXISTING_MEMBER));
         member.updateMemberInfo(request.gender(), request.age());
 
+        MemberCategory.isValidCategories(request.categories());
         List<MemberCategory> memberCategories = memberCategoryRepository.findAllByMemberId(
             memberId);
         memberCategories.removeIf(

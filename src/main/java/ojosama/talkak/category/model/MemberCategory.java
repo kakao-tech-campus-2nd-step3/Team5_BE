@@ -9,10 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ojosama.talkak.common.exception.TalKakException;
+import ojosama.talkak.common.exception.code.MemberError;
 import ojosama.talkak.member.model.Member;
 
 @Entity
@@ -37,5 +40,11 @@ public class MemberCategory {
         this.id = new MemberCategoryId(member.getId(), category.getId());
         this.member = member;
         this.category = category;
+    }
+
+    public static void isValidCategories(List<String> categories) {
+        if(categories.size() != 3) {
+            throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
+        }
     }
 }
