@@ -20,6 +20,14 @@ public class LoggingAspect {
     public void controllerPointCut() {
     }
 
+    @Pointcut("execution(* ojosama.talkak..service..*(..))")
+    public void servicePointCut() {
+    }
+
+    @Pointcut("execution(* ojosama.talkak..domain..*(..))")
+    public void domainPointCut() {
+    }
+
     @Around("controllerPointCut()")
     public Object logRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
@@ -36,7 +44,7 @@ public class LoggingAspect {
         return result;
     }
 
-    @AfterThrowing(pointcut = "execution(* ojosama.talkak..*(..))", throwing = "e")
+    @AfterThrowing(pointcut = "servicePointCut() || domainPointCut()", throwing = "e")
     public void logException(JoinPoint joinPoint, TalKakException e) {
         log.warn("Exception in {}.{}() with cause: {}", joinPoint.getSignature().getDeclaringTypeName(),
             joinPoint.getSignature().getName(), e.getMessage(), e);
