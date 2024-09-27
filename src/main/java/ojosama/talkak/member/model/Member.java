@@ -2,6 +2,8 @@ package ojosama.talkak.member.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,16 +35,22 @@ public class Member {
     private String email;
     private Boolean gender;
     private Integer age;
-    private Integer membership;
+    @Enumerated(EnumType.STRING)
+    private MembershipTier membership;
     private Integer point;
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
-
+    
+    public Member(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+  
     public void updateMemberInfo(String gender, Integer age) {
         if (!gender.matches("남자|여자") || age == null || age < 10 || age > 100) {
             throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
         }
-
+      
         this.gender = !gender.equals("남자");
         this.age = age;
     }
