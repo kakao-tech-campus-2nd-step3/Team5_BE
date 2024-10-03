@@ -6,17 +6,23 @@ import ojosama.talkak.member.model.Member;
 
 public record MyPageInfoResponse(
     String gender,
-    Integer age,
-    List<String> categories
+    String age,
+    List<CategoryResponse> categories
 ) {
+    public record CategoryResponse(
+        Long id,
+        String name
+    ) {
+    }
+
 
     public static MyPageInfoResponse of(Member member, List<Category> categories) {
         String gender = !member.getGender() ? "남자" : "여자";
-        Integer age = member.getAge();
-        List<String> names = categories.stream()
-            .map(Category::getName)
+        String age = member.getAge().getName();
+        List<CategoryResponse> categoryResponses = categories.stream()
+            .map(c -> new CategoryResponse(c.getId(), c.getCategoryType().getName()))
             .toList();
-        return new MyPageInfoResponse(gender, age, names);
+        return new MyPageInfoResponse(gender, age, categoryResponses);
     }
-
 }
+

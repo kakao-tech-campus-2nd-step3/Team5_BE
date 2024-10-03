@@ -34,7 +34,8 @@ public class Member {
     private String imageUrl;
     private String email;
     private Boolean gender;
-    private Integer age;
+    @Enumerated(EnumType.STRING)
+    private Age age;
     @Enumerated(EnumType.STRING)
     private MembershipTier membership;
     private Integer point;
@@ -46,12 +47,13 @@ public class Member {
         this.username = username;
     }
   
-    public void updateMemberInfo(String gender, Integer age) {
-        if (!gender.matches("남자|여자") || age == null || age < 10 || age > 100) {
+    public void updateMemberInfo(String gender, String age) {
+        Age newAge = Age.fromName(age);
+        if (!gender.matches("남자|여자") || newAge == null) {
             throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
         }
       
         this.gender = !gender.equals("남자");
-        this.age = age;
+        this.age = newAge;
     }
 }
