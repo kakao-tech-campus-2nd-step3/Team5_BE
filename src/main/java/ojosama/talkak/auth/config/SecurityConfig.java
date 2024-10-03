@@ -1,16 +1,14 @@
 package ojosama.talkak.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import ojosama.talkak.auth.filter.SuccessHandler;
 import ojosama.talkak.auth.service.AuthService;
-import ojosama.talkak.auth.service.SuccessHandler;
-import ojosama.talkak.member.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -23,6 +21,7 @@ public class SecurityConfig {
 
     private final AuthService authService;
     private final SuccessHandler successHandler;
+    private final AuthProperties authProperties;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,8 +44,13 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
             )
             .oauth2Login((oauth2Login) -> oauth2Login
-                .userInfoEndpoint((userInfoEndpoint) -> userInfoEndpoint
+                .authorizationEndpoint(endpoint -> endpoint
+                    .baseUri(authProperties.authorizationUri()))
+                .redirectionEndpoint(endpoint -> endpoint
+                    .baseUri(authProperties.redirectionUri()))
+                .userInfoEndpoint(endpoint -> endpoint
                     .userService(authService))
+                .successHandler(successHandler)
             )
             .httpBasic(
                 AbstractHttpConfigurer::disable
@@ -72,22 +76,5 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
-    }
-
-    @Bean
-    public DefaultOAuth2UserService defaultOAuth2UserService() {
-        return new DefaultOAuth2UserService();
-    }
-
-    @Bean
-    public AuthService authService(DefaultOAuth2UserService defaultOAuth2UserService,
-        MemberRepository memberRepository) {
-
-        return new AuthService(defaultOAuth2UserService, memberRepository);
-    }
-
-    @Bean
-    public SuccessHandler successHandler() {
-        return new SuccessHandler();
     }
 }

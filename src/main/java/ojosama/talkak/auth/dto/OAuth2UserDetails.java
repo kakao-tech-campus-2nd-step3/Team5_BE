@@ -6,14 +6,14 @@ import ojosama.talkak.member.model.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-public record OAuth2UserInfo(
+public record OAuth2UserDetails(
     String email,
     String username,
     String imageUrl
 ) implements OAuth2User {
 
-    public static OAuth2UserInfo of(Member member) {
-        return new OAuth2UserInfo(member.getEmail(), member.getUsername(), member.getImageUrl());
+    public static OAuth2UserDetails of(Member member) {
+        return new OAuth2UserDetails(member.getEmail(), member.getUsername(), member.getImageUrl());
     }
 
     @Override
