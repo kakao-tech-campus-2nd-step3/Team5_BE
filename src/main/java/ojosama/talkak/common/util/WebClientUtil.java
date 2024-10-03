@@ -1,7 +1,7 @@
-package ojosama.talkak.video.util;
+package ojosama.talkak.common.util;
 
 import lombok.RequiredArgsConstructor;
-import ojosama.talkak.video.config.WebClientConfig;
+import ojosama.talkak.common.config.WebClientConfig;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
