@@ -10,7 +10,7 @@ import java.util.List;
 import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.video.dto.YoutubeApiResponse;
 import ojosama.talkak.video.dto.YoutubeCategoryRequest;
-import ojosama.talkak.video.util.WebClientUtil;
+import ojosama.talkak.common.util.WebClientUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;

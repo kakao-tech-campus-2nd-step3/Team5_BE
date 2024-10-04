@@ -1,4 +1,4 @@
-package ojosama.talkak.video.config;
+package ojosama.talkak.common.config;
 
 import io.netty.channel.ChannelOption;
 import org.springframework.context.annotation.Bean;
