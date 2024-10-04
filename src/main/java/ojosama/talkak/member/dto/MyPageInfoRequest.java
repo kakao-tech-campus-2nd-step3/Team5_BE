@@ -4,8 +4,8 @@ import java.util.List;
 
 public record MyPageInfoRequest(
     String gender,
-    Integer age,
-    List<String> categories
+    String age,
+    List<Long> categories
 ) {
 
 

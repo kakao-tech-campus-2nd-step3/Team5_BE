@@ -48,7 +48,7 @@ public class MyPageService {
             memberId);
         memberCategories.removeIf(
             mc -> request.categories().stream().noneMatch(
-                c -> c.equals(mc.getCategory().getName())
+                c -> c.equals(mc.getCategory().getId())
             )
         );
 
@@ -56,10 +56,10 @@ public class MyPageService {
         List<MemberCategory> newMemberCategories = request.categories().stream()
             .filter(
                 c -> memberCategories.stream().noneMatch(
-                    mc -> mc.getCategory().getName().equals(c)
+                    mc -> mc.getCategory().getId().equals(c)
                 )
             ).map(c -> {
-                Category category = categoryRepository.findByName(c)
+                Category category = categoryRepository.findById(c)
                     .orElseThrow(() -> TalKakException.of(CategoryError.NOT_EXISTING_CATEGORY));
                 return memberCategoryRepository.save(new MemberCategory(member, category));
             })
