@@ -42,7 +42,7 @@ public class MemberCategory {
         this.category = category;
     }
 
-    public static void isValidCategories(List<String> categories) {
+    public static void isValidCategories(List<Long> categories) {
         if(categories.size() != 3) {
             throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
         }

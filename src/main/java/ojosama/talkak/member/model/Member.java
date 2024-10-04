@@ -1,6 +1,7 @@
 package ojosama.talkak.member.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,7 +16,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import ojosama.talkak.comment.model.Comment;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.MemberError;
@@ -32,9 +32,11 @@ public class Member {
     private Long id;
     private String username;
     private String imageUrl;
+    @Column(unique = true)
     private String email;
     private Boolean gender;
-    private Integer age;
+    @Enumerated(EnumType.STRING)
+    private Age age;
     @Enumerated(EnumType.STRING)
     private MembershipTier membership;
     private Integer point;
@@ -45,13 +47,24 @@ public class Member {
         this.id = id;
         this.username = username;
     }
+
+    private Member(String username, String imageUrl, String email) {
+        this.username = username;
+        this.imageUrl = imageUrl;
+        this.email = email;
+    }
+
+    public static Member of(String username, String imageUrl, String email) {
+        return new Member(username, imageUrl, email);
+    }
   
-    public void updateMemberInfo(String gender, Integer age) {
-        if (!gender.matches("남자|여자") || age == null || age < 10 || age > 100) {
+    public void updateMemberInfo(String gender, String age) {
+        Age newAge = Age.fromName(age);
+        if (!gender.matches("남자|여자") || newAge == null) {
             throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
         }
       
         this.gender = !gender.equals("남자");
-        this.age = age;
+        this.age = newAge;
     }
 }
