@@ -1,6 +1,7 @@
 package ojosama.talkak.member.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,7 +16,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import ojosama.talkak.comment.model.Comment;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.MemberError;
@@ -32,6 +32,7 @@ public class Member {
     private Long id;
     private String username;
     private String imageUrl;
+    @Column(unique = true)
     private String email;
     private Boolean gender;
     @Enumerated(EnumType.STRING)
@@ -45,6 +46,16 @@ public class Member {
     public Member(Long id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    private Member(String username, String imageUrl, String email) {
+        this.username = username;
+        this.imageUrl = imageUrl;
+        this.email = email;
+    }
+
+    public static Member of(String username, String imageUrl, String email) {
+        return new Member(username, imageUrl, email);
     }
   
     public void updateMemberInfo(String gender, String age) {
