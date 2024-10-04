@@ -1,6 +1,6 @@
 package ojosama.talkak.video.service;
 
-import ojosama.talkak.common.exception.TalKakException;
+import ojosama.talkak.common.exception.code.VideoError;
 import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
 import ojosama.talkak.video.util.IdExtractor;
 import org.junit.jupiter.api.DisplayName;
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static ojosama.talkak.common.exception.ExceptionAssertions.assertErrorCode;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class VideoServiceTest {
@@ -56,8 +56,8 @@ public class VideoServiceTest {
 
         // then
         for (String url : urls) {
-            TalKakException exception = assertThrows(TalKakException.class, () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequest(url)));
-            assertThat(exception.code()).isEqualTo("V001");
+            assertErrorCode(VideoError.INVALID_VIDEO_ID,
+                    () -> videoService.validateYoutubeUrl(new YoutubeUrlValidationRequest(url)));
         }
     }
 }
