@@ -1,4 +1,4 @@
-package ojosama.talkak.member.model;
+package ojosama.talkak.member.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,7 +16,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ojosama.talkak.comment.model.Comment;
+import ojosama.talkak.comment.domain.Comment;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.MemberError;
 

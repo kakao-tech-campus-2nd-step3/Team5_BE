@@ -1,8 +1,7 @@
 package ojosama.talkak.comment.repository;
 
 import java.util.List;
-import java.util.Optional;
-import ojosama.talkak.comment.model.Comment;
+import ojosama.talkak.comment.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

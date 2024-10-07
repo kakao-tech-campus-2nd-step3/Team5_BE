@@ -1,4 +1,4 @@
-package ojosama.talkak.member.model;
+package ojosama.talkak.member.domain;
 
 public enum MembershipTier {
     Basic, Standard, Premium;

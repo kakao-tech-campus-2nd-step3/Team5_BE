@@ -1,4 +1,4 @@
-package ojosama.talkak.keyword.model;
+package ojosama.talkak.keyword.domain;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ojosama.talkak.video.model.Video;
+import ojosama.talkak.video.domain.Video;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

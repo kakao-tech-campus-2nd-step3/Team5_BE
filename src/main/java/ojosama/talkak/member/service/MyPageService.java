@@ -1,8 +1,8 @@
 package ojosama.talkak.member.service;
 
 import java.util.List;
-import ojosama.talkak.category.model.Category;
-import ojosama.talkak.category.model.MemberCategory;
+import ojosama.talkak.category.domain.Category;
+import ojosama.talkak.category.domain.MemberCategory;
 import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.category.repository.MemberCategoryRepository;
 import ojosama.talkak.common.exception.TalKakException;
@@ -10,7 +10,7 @@ import ojosama.talkak.common.exception.code.CategoryError;
 import ojosama.talkak.common.exception.code.MemberError;
 import ojosama.talkak.member.dto.MyPageInfoRequest;
 import ojosama.talkak.member.dto.MyPageInfoResponse;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
