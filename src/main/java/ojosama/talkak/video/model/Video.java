@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
 import ojosama.talkak.comment.model.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 

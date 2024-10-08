@@ -3,14 +3,11 @@ package ojosama.talkak.video.service;
 import ojosama.talkak.common.exception.code.VideoError;
 import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
 import ojosama.talkak.video.util.IdExtractor;
-import ojosama.talkak.video.exception.YoutubeValidationException;
-import ojosama.talkak.video.dto.YoutubeUrlValidationRequestDto;
-import ojosama.talkak.video.service.VideoService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import static ojosama.talkak.common.exception.ExceptionAssertions.assertErrorCode;
 import static org.assertj.core.api.Assertions.assertThat;
 
