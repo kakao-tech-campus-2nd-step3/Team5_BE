@@ -9,8 +9,8 @@ import ojosama.talkak.video.util.IdExtractor;
 import ojosama.talkak.common.util.WebClientUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+
 
 @Service
 public class VideoService {

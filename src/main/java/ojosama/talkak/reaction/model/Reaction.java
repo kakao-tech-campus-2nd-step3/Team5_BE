@@ -11,11 +11,11 @@ import ojosama.talkak.video.model.Video;
 
 @Entity
 @Table(name = "reaction")
+@Getter
 public class Reaction {
 
     @EmbeddedId
     private ReactionId id;  // 복합 키를 포함하는 필드
-
     private Boolean reaction;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,21 +32,9 @@ public class Reaction {
         this.video = video;
         this.reaction = reactionType;
     }
-
-    // Getters and setters
-    public ReactionId getId() {
-        return id;
-    }
-
+  
     public Boolean isReaction() {
         return reaction;
     }
 
-    public Member getMember() {
-        return member;
-    }
-
-    public Video getVideo() {
-        return video;
-    }
 }

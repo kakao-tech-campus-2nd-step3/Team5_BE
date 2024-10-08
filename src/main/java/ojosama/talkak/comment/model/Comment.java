@@ -13,6 +13,7 @@ import ojosama.talkak.video.model.Video;
 
 @Entity
 @Table(name = "comment")
+@Getter
 public class Comment {
 
     @Id
@@ -41,20 +42,6 @@ public class Comment {
         this.content = content;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-    public Video getVideo() {
-        return video;
-    }
     public void updateContent(String newContent) {
         this.content = newContent;
     }
