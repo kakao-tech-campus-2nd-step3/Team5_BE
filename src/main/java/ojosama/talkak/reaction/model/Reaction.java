@@ -6,17 +6,18 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import ojosama.talkak.member.model.Member;
 import ojosama.talkak.video.model.Video;
 
 @Entity
 @Table(name = "reaction")
+@Getter
 public class Reaction {
 
     @EmbeddedId
     private ReactionId id;  // 복합 키를 포함하는 필드
-
-    private boolean reaction;
+    private Boolean reaction;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
@@ -26,36 +27,15 @@ public class Reaction {
     @JoinColumn(name = "video_id", insertable = false, updatable = false)
     private Video video;
 
-    // Getters and setters
-    public ReactionId getId() {
-        return id;
+    public Reaction(ReactionId reactionId, Member member, Video video, boolean reactionType) {
+        this.id = reactionId;
+        this.member = member;
+        this.video = video;
+        this.reaction = reactionType;
     }
-
-    public void setId(ReactionId id) {
-        this.id = id;
-    }
-
-    public boolean isReaction() {
+  
+    public Boolean isReaction() {
         return reaction;
     }
 
-    public void setReaction(boolean reaction) {
-        this.reaction = reaction;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public Video getVideo() {
-        return video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
-    }
 }

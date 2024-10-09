@@ -1,0 +1,23 @@
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns='http://www.ehcache.org/v3'
+  xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd'">
+
+  <cache alias="youtubeShortsCache">
+    <expiry>
+      <ttl unit="seconds">21600</ttl> <!-- 6시간 TTL 설정 -->
+    </expiry>
+    <resources>
+      <heap unit="entries">1000</heap> <!-- 최대 1000개의 엔트리 -->
+    </resources>
+  </cache>
+
+  <cache alias="youtubeCategoryShortsCache">
+    <expiry>
+      <ttl unit="seconds">21600</ttl> <!-- 6시간 TTL 설정 -->
+    </expiry>
+    <resources>
+      <heap unit="entries">1000</heap> <!-- 최대 1000개의 엔트리 -->
+    </resources>
+  </cache>
+
+</config>
