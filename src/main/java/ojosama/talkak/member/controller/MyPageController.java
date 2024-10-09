@@ -1,5 +1,6 @@
 package ojosama.talkak.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ojosama.talkak.member.dto.MyPageInfoRequest;
 import ojosama.talkak.member.dto.MyPageInfoResponse;
@@ -25,7 +26,8 @@ public class MyPageController {
     }
 
     @PutMapping("/api/me")
-    public ResponseEntity<MyPageInfoResponse> updateMemberInfo(@RequestBody MyPageInfoRequest myPageInfoRequest) {
+    public ResponseEntity<MyPageInfoResponse> updateMemberInfo(
+        @RequestBody @Valid MyPageInfoRequest myPageInfoRequest) {
         Long memberId = 1L;
         MyPageInfoResponse memberInfo = myPageService.updateMemberInfo(memberId, myPageInfoRequest);
         return new ResponseEntity<>(memberInfo, HttpStatus.OK);
