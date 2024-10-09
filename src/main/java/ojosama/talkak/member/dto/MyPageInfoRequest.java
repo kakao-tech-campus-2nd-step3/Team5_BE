@@ -4,17 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.util.List;
-import ojosama.talkak.common.exception.MyPageEx;
-import ojosama.talkak.common.exception.TalKakException;
-import ojosama.talkak.common.exception.code.MemberError;
 
-@MyPageEx(exceptionType = TalKakException.class, errorCode = MemberError.ERROR_UPDATE_MEMBER_INFO)
 public record MyPageInfoRequest(
-    @NotBlank
+    @NotBlank(message = "성별 정보를 올바르게 입력해주세요.")
     String gender,
-    @NotBlank
+    @NotBlank(message = "나이 정보를 올바르게 입력해주세요.")
     String age,
-    @NotEmpty @Size(min = 3, max = 3)
+    @NotEmpty(message = "카테고리 정보를 올바르게 입력해주세요.")
+    @Size(min = 3, max = 3, message = "카테고리는 3개를 선택해야 합니다.")
     List<Long> categories
 ) {
 
