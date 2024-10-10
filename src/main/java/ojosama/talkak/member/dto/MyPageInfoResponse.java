@@ -9,12 +9,6 @@ public record MyPageInfoResponse(
     String age,
     List<CategoryResponse> categories
 ) {
-    public record CategoryResponse(
-        Long id,
-        String name
-    ) {
-    }
-
 
     public static MyPageInfoResponse of(Member member, List<Category> categories) {
         String gender = !member.getGender() ? "남자" : "여자";

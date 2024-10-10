@@ -3,9 +3,6 @@ package ojosama.talkak.category.model;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -40,6 +37,10 @@ public class MemberCategory {
         this.id = new MemberCategoryId(member.getId(), category.getId());
         this.member = member;
         this.category = category;
+    }
+
+    public static MemberCategory of(Member member, Category category) {
+        return new MemberCategory(member, category);
     }
 
     public static void isValidCategories(List<Long> categories) {

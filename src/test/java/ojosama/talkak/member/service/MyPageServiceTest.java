@@ -8,15 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 import ojosama.talkak.category.model.Category;
 import ojosama.talkak.category.model.CategoryType;
-
 import ojosama.talkak.category.model.MemberCategory;
 import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.category.repository.MemberCategoryRepository;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.MemberError;
+import ojosama.talkak.member.dto.CategoryResponse;
 import ojosama.talkak.member.dto.MyPageInfoRequest;
 import ojosama.talkak.member.dto.MyPageInfoResponse;
-import ojosama.talkak.member.dto.MyPageInfoResponse.CategoryResponse;
 import ojosama.talkak.member.model.Age;
 import ojosama.talkak.member.model.Member;
 import ojosama.talkak.member.model.MembershipTier;
