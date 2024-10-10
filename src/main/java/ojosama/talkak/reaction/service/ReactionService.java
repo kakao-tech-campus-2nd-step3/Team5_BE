@@ -32,20 +32,18 @@ public class ReactionService {
             .orElseThrow(() -> TalKakException.of(ReactionError.INVALID_VIDEO_ID));
 
         ReactionId reactionId = new ReactionId(memberId, videoId);
-        Reaction existingReaction = reactionRepository.findById(reactionId)
-            .orElse(null);
-
-        if (existingReaction != null) {
-            handleExistingReaction(existingReaction, video);
-        } else {
-            Reaction newReaction = new Reaction(reactionId, member, video, true);
-            reactionRepository.save(newReaction);
-            video.incrementLikes();
-        }
-        videoRepository.save(video);
+        reactionRepository.findById(reactionId)
+            .ifPresentOrElse(
+                existingReaction -> removeExistingReactionAndUpdateLikes(existingReaction, video),
+                () -> {
+                    Reaction newReaction = new Reaction(reactionId, member, video, true);
+                    reactionRepository.save(newReaction);
+                    video.incrementLikes();
+                }
+            );
     }
 
-    private void handleExistingReaction(Reaction existingReaction, Video video) {
+    private void removeExistingReactionAndUpdateLikes(Reaction existingReaction, Video video) {
         reactionRepository.delete(existingReaction);
         video.decrementLikes();
     }
