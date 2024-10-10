@@ -38,8 +38,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Age age;
     @Enumerated(EnumType.STRING)
-    private MembershipTier membership;
-    private Integer point;
+    private MembershipTier membership = MembershipTier.Basic;
+    private Integer point = 0;
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
