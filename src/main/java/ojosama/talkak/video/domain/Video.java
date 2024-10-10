@@ -35,6 +35,10 @@ public class Video {
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public Video() {
+
+    }
+
     public Video(Long id, String title, Long countLikes) {
         this.id = id;
         this.title = title;
