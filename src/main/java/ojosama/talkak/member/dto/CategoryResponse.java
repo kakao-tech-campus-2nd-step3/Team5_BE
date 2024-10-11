@@ -1,6 +1,6 @@
 package ojosama.talkak.member.dto;
 
-import ojosama.talkak.category.model.Category;
+import ojosama.talkak.category.domain.Category;
 
 public record CategoryResponse(
     Long id,

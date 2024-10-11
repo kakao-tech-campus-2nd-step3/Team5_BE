@@ -1,8 +1,7 @@
-package ojosama.talkak.member.model;
+package ojosama.talkak.member.domain;
 import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ojosama.talkak.category.model.CategoryType;
 
 @RequiredArgsConstructor
 @Getter

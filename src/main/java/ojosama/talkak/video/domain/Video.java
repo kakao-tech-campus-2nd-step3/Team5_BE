@@ -1,4 +1,4 @@
-package ojosama.talkak.video.model;
+package ojosama.talkak.video.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,8 +11,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+<<<<<<< HEAD:src/main/java/ojosama/talkak/video/model/Video.java
 import lombok.Getter;
 import ojosama.talkak.comment.model.Comment;
+=======
+import ojosama.talkak.comment.domain.Comment;
+>>>>>>> cb827e14a78941820bcceef86b51244432ad0bb0:src/main/java/ojosama/talkak/video/domain/Video.java
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity

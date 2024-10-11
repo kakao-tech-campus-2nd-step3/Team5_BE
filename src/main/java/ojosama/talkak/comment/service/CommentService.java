@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Objects;
 import ojosama.talkak.comment.dto.CommentRequest;
 import ojosama.talkak.comment.dto.CommentResponse;
-import ojosama.talkak.comment.model.Comment;
+import ojosama.talkak.comment.domain.Comment;
 import ojosama.talkak.comment.repository.CommentRepository;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.CommentError;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.repository.MemberRepository;
 import ojosama.talkak.member.dto.MemberResponse;
-import ojosama.talkak.video.model.Video;
+import ojosama.talkak.video.domain.Video;
 import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 

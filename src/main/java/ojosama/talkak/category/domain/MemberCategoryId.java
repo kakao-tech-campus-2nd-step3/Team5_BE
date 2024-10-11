@@ -1,4 +1,4 @@
-package ojosama.talkak.keyword.model;
+package ojosama.talkak.category.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -14,10 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Getter @Setter
-public class VideoKeywordId implements Serializable {
+public class MemberCategoryId implements Serializable {
 
-    @Column(name = "video_id")
-    private Long videoId;
-    @Column(name = "keyword_id")
-    private Long keywordId;
+    @Column(name = "member_id")
+    private Long memberId;
+    @Column(name = "category_id")
+    private Long categoryId;
+
 }

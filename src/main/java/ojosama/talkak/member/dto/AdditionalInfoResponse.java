@@ -1,7 +1,7 @@
 package ojosama.talkak.member.dto;
 
 import java.util.List;
-import ojosama.talkak.category.model.Category;
+import ojosama.talkak.category.domain.Category;
 
 public record AdditionalInfoResponse(
     List<CategoryResponse> categories,

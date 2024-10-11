@@ -1,8 +1,8 @@
 package ojosama.talkak.member.dto;
 
 import java.util.List;
-import ojosama.talkak.category.model.Category;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.category.domain.Category;
+import ojosama.talkak.member.domain.Member;
 
 public record MyPageInfoResponse(
     String gender,
