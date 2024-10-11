@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Optional<Category> findByCategoryType(CategoryType categoryType);
-    String findCategoryById(Long categoryId);
+    @Query("SELECT c.categoryType FROM Category c WHERE c.id = :id")
+    Optional<CategoryType> findCategoryTypeById(@Param("id") Long id);
 
 }
