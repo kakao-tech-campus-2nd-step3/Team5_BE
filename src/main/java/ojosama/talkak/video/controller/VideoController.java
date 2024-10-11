@@ -84,7 +84,7 @@ public class VideoController {
             youtubeCategoryRequest);
         long end = System.currentTimeMillis();
         log.info("카테고리별 쇼츠 Cache 수행시간 : "+ (end - start));
-        
+
         return ResponseEntity.ok(response);
     }
 }
