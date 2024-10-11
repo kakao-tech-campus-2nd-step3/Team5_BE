@@ -32,6 +32,7 @@ public class Video {
     private String thumbnail;
     private Boolean isPublic;
     private Long countLikes;
+    private Long views = 0L;
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 
@@ -79,5 +80,9 @@ public class Video {
 
     public Long getMemberId() {
         return memberId;
+    }
+
+    public void incrementViews() {
+        this.views += 1;
     }
 }
