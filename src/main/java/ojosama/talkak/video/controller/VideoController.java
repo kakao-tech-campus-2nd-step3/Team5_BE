@@ -1,5 +1,7 @@
 package ojosama.talkak.video.controller;
 
+import static org.hibernate.query.sqm.tree.SqmNode.log;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,6 +15,8 @@ import ojosama.talkak.video.dto.YoutubeUrlValidationResponse;
 import ojosama.talkak.video.service.AwsS3Service;
 import ojosama.talkak.video.service.VideoService;
 import ojosama.talkak.video.service.YoutubeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +66,11 @@ public class VideoController {
     // 메인페이지에서 유튜브 관련 영상 불러오기(카테고리 지정 X)
     @GetMapping("/youtube")
     public ResponseEntity<List<YoutubeApiResponse>> getPopularYoutubeShorts() throws IOException {
+        long start = System.currentTimeMillis();
         List<YoutubeApiResponse> response = youtubeService.getPopularShorts();
+        long end = System.currentTimeMillis();
+        log.info("인기 쇼츠 Cache 수행시간 : "+ (end - start));
+
         return ResponseEntity.ok(response);
     }
 
@@ -71,8 +79,12 @@ public class VideoController {
     public ResponseEntity<List<YoutubeApiResponse>> getPopularYoutubeShortsByCategory(
         @PathVariable("categoryId")
         YoutubeCategoryRequest youtubeCategoryRequest) throws IOException {
+        long start = System.currentTimeMillis();
         List<YoutubeApiResponse> response = youtubeService.getShortsByCategory(
             youtubeCategoryRequest);
+        long end = System.currentTimeMillis();
+        log.info("카테고리별 쇼츠 Cache 수행시간 : "+ (end - start));
+        
         return ResponseEntity.ok(response);
     }
 }
