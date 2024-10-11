@@ -2,12 +2,12 @@ package ojosama.talkak.reaction.service;
 
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.ReactionError;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.repository.MemberRepository;
-import ojosama.talkak.reaction.model.Reaction;
-import ojosama.talkak.reaction.model.ReactionId;
+import ojosama.talkak.reaction.domain.Reaction;
+import ojosama.talkak.reaction.domain.ReactionId;
 import ojosama.talkak.reaction.repository.ReactionRepository;
-import ojosama.talkak.video.model.Video;
+import ojosama.talkak.video.domain.Video;
 import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package ojosama.talkak.reaction.model;
+package ojosama.talkak.reaction.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

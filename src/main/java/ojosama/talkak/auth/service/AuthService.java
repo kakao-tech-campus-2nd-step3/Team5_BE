@@ -3,7 +3,7 @@ package ojosama.talkak.auth.service;
 import lombok.RequiredArgsConstructor;
 import ojosama.talkak.auth.dto.GoogleUserDetails;
 import ojosama.talkak.auth.dto.OAuth2UserDetails;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.repository.MemberRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

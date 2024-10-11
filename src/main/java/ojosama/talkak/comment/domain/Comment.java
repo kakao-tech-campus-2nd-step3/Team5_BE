@@ -1,4 +1,4 @@
-package ojosama.talkak.comment.model;
+package ojosama.talkak.comment.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import ojosama.talkak.member.model.Member;
-import ojosama.talkak.video.model.Video;
+import ojosama.talkak.member.domain.Member;
+import ojosama.talkak.video.domain.Video;
 
 @Entity
 @Table(name = "comment")
