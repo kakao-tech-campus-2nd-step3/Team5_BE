@@ -29,10 +29,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class MyPageServiceTest {
+class MemberServiceTest {
 
     @Autowired
-    private MyPageService myPageService;
+    private MemberService memberService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
@@ -72,7 +72,7 @@ class MyPageServiceTest {
     @DisplayName("마이페이지 개인정보 가져오기")
     @Test
     void getMemberInfo() {
-        MyPageInfoResponse memberInfo = myPageService.getMemberInfo(member.getId());
+        MyPageInfoResponse memberInfo = memberService.getMemberInfo(member.getId());
         assertThat(memberInfo.gender()).isEqualTo("남자");
         assertThat(memberInfo.age()).isEqualTo("20대");
         assertThat(memberInfo.categories().size()).isEqualTo(3);
@@ -90,7 +90,7 @@ class MyPageServiceTest {
     void updateMemberInfo() {
         MyPageInfoRequest request = new MyPageInfoRequest("여자", "20대",
             demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        MyPageInfoResponse memberInfo = myPageService.updateMemberInfo(member.getId(), request);
+        MyPageInfoResponse memberInfo = memberService.updateMemberInfo(member.getId(), request);
         List<String> categoryNames = memberInfo.categories().stream()
             .map(CategoryResponse::name)
             .toList();
@@ -105,7 +105,7 @@ class MyPageServiceTest {
     void invalidGender() {
         MyPageInfoRequest request = new MyPageInfoRequest("@@@", "20대",
             demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request))
+        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
     }
@@ -115,19 +115,19 @@ class MyPageServiceTest {
     void invalidAge() {
         MyPageInfoRequest request = new MyPageInfoRequest("여자", null,
             demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request))
+        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
 
         MyPageInfoRequest request2 = new MyPageInfoRequest("여자", "0대",
             demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request2))
+        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request2))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
 
         MyPageInfoRequest request3 = new MyPageInfoRequest("여자", "60대",
             demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request2))
+        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request2))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
     }
@@ -137,7 +137,7 @@ class MyPageServiceTest {
     void invalidCategories() {
         MyPageInfoRequest request = new MyPageInfoRequest("여자", "20대",
             demoCategoryIds(Arrays.asList("음식", "음악")));
-        assertThatThrownBy(() -> myPageService.updateMemberInfo(member.getId(), request))
+        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
             .isInstanceOf(TalKakException.class)
             .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
     }
