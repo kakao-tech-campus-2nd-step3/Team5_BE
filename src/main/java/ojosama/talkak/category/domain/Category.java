@@ -1,6 +1,6 @@
 package ojosama.talkak.category.domain;
 
-import static ojosama.talkak.member.service.MyPageService.ALLOWED_CATEGORY_SELECT_COUNT;
+import static ojosama.talkak.member.service.MemberService.ALLOWED_CATEGORY_SELECT_COUNT;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

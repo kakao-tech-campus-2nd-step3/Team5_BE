@@ -12,7 +12,7 @@ import ojosama.talkak.category.domain.Category;
 import ojosama.talkak.category.domain.CategoryType;
 import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.dto.MyPageInfoRequest;
-import ojosama.talkak.member.service.MyPageService;
+import ojosama.talkak.member.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class MyPageControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private MyPageService myPageService;
+    private MemberService memberService;
 
     Member member;
     List<Category> categories;

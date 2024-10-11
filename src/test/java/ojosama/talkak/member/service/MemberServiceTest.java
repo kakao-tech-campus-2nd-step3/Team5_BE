@@ -71,8 +71,9 @@ class MemberServiceTest {
 
     @DisplayName("마이페이지 개인정보 가져오기")
     @Test
-    void getMemberInfo() {
+    void get_myPage_info() {
         MyPageInfoResponse memberInfo = memberService.getMemberInfo(member.getId());
+
         assertThat(memberInfo.gender()).isEqualTo("남자");
         assertThat(memberInfo.age()).isEqualTo("20대");
         assertThat(memberInfo.categories().size()).isEqualTo(3);
@@ -103,44 +104,71 @@ class MemberServiceTest {
 
     @DisplayName("마이페이지 개인정보 수정하기 실패-유효하지 않은 성별 정보")
     @Test
-    void invalidGender() {
-        MyPageInfoRequest request = new MyPageInfoRequest("@@@", "20대",
-            demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
-            .isInstanceOf(TalKakException.class)
-            .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
+    void invalid_input_gender() {
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createGender(null)));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createGender("")));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createGender("남자 ")));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createGender("남자, 여자")));
     }
 
     @DisplayName("마이페이지 개인정보 수정하기 실패-유효하지 않은 나이 정보")
     @Test
-    void invalidAge() {
-        MyPageInfoRequest request = new MyPageInfoRequest("여자", null,
-            demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
-            .isInstanceOf(TalKakException.class)
-            .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
+    void invalid_input_age() {
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge(null)));
 
-        MyPageInfoRequest request2 = new MyPageInfoRequest("여자", "0대",
-            demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request2))
-            .isInstanceOf(TalKakException.class)
-            .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge("")));
 
-        MyPageInfoRequest request3 = new MyPageInfoRequest("여자", "60대",
-            demoCategoryIds(Arrays.asList("음식", "음악", "스포츠")));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request2))
-            .isInstanceOf(TalKakException.class)
-            .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge("10")));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge("10대 ")));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge("10대.")));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge("60대")));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(), createAge("50대이상")));
     }
 
     @DisplayName("마이페이지 개인정보 수정하기 실패-유효하지 않은 카테고리 옵션")
     @Test
-    void invalidCategories() {
-        MyPageInfoRequest request = new MyPageInfoRequest("여자", "20대",
-            demoCategoryIds(Arrays.asList("음식", "음악")));
-        assertThatThrownBy(() -> memberService.updateMemberInfo(member.getId(), request))
-            .isInstanceOf(TalKakException.class)
-            .hasFieldOrPropertyWithValue("errorCode", MemberError.ERROR_UPDATE_MEMBER_INFO);
+    void invalid_input_categories() {
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(),
+                createCategories(List.of("", "", ""))));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(),
+                createCategories(List.of("음식"))));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(),
+                createCategories(List.of("음식", "음악"))));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(),
+                createCategories(List.of("음식", "음악", "여행", "게임"))));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(),
+                createCategories(List.of("음식", "음악", "음악"))));
+
+        assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
+            () -> memberService.updateMemberInfo(member.getId(),
+                createCategories(List.of("음식", "음악", "여행 "))));
     }
 
     private MyPageInfoRequest createGender(String gender) {

@@ -10,6 +10,7 @@ import ojosama.talkak.category.domain.MemberCategory;
 import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.category.repository.MemberCategoryRepository;
 import ojosama.talkak.common.exception.TalKakException;
+import ojosama.talkak.common.exception.code.CategoryError;
 import ojosama.talkak.common.exception.code.MemberError;
 import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.dto.AdditionalInfoRequest;
