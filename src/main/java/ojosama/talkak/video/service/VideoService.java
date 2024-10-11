@@ -2,14 +2,13 @@ package ojosama.talkak.video.service;
 
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.VideoError;
-import ojosama.talkak.video.dto.YoutubeUrlValidationAPIResponse;
-import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
-import ojosama.talkak.video.dto.YoutubeUrlValidationResponse;
+import ojosama.talkak.video.response.YoutubeUrlValidationAPIResponse;
+import ojosama.talkak.video.request.YoutubeUrlValidationRequest;
+import ojosama.talkak.video.response.YoutubeUrlValidationResponse;
 import ojosama.talkak.video.util.IdExtractor;
 import ojosama.talkak.common.util.WebClientUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

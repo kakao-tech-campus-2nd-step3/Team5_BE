@@ -1,7 +1,7 @@
 package ojosama.talkak.video.service;
 
 import ojosama.talkak.common.exception.code.VideoError;
-import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
+import ojosama.talkak.video.request.YoutubeUrlValidationRequest;
 import ojosama.talkak.video.util.IdExtractor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class VideoServiceTest {
-
     @Autowired
     private VideoService videoService;
     private IdExtractor idExtractor = new IdExtractor();
