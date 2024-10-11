@@ -1,7 +1,7 @@
 package ojosama.talkak.member.repository;
 
 import java.util.Optional;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

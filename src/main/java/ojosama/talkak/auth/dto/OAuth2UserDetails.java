@@ -2,7 +2,7 @@ package ojosama.talkak.auth.dto;
 
 import java.util.Collection;
 import java.util.Map;
-import ojosama.talkak.member.model.Member;
+import ojosama.talkak.member.domain.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
