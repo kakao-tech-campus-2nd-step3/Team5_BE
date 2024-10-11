@@ -11,11 +11,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
 import ojosama.talkak.comment.domain.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "video")
+@Getter
 public class Video {
 
     @Id
@@ -27,7 +29,6 @@ public class Video {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
     private Long categoryId;
     private String thumbnail;
     private Boolean isPublic;
@@ -44,7 +45,6 @@ public class Video {
         this.id = id;
         this.title = title;
         this.countLikes = countLikes;
-
     }
 
     public Video(String title, Long memberId, Long categoryId, String uniqueFileName) {
@@ -54,32 +54,12 @@ public class Video {
         this.uniqueFileName = uniqueFileName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getUniqueFileName() {
-        return uniqueFileName;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
     public void incrementLikes() {
         this.countLikes++;
     }
 
     public void decrementLikes() {
         this.countLikes--;
-    }
-
-    public Long getMemberId() {
-        return memberId;
     }
 
     public void incrementViews() {

@@ -1,24 +1,28 @@
 package ojosama.talkak.member.service;
 
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import ojosama.talkak.category.domain.Category;
+import ojosama.talkak.category.domain.CategoryType;
 import ojosama.talkak.category.domain.MemberCategory;
 import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.category.repository.MemberCategoryRepository;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.MemberError;
+import ojosama.talkak.member.domain.Member;
+import ojosama.talkak.member.dto.AdditionalInfoRequest;
+import ojosama.talkak.member.dto.AdditionalInfoResponse;
 import ojosama.talkak.member.dto.MyPageInfoRequest;
 import ojosama.talkak.member.dto.MyPageInfoResponse;
-import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
-public class MyPageService {
+public class MemberService {
 
     private final MemberRepository memberRepository;
     private final MemberCategoryRepository memberCategoryRepository;
@@ -26,7 +30,7 @@ public class MyPageService {
 
     public static final Integer ALLOWED_CATEGORY_SELECT_COUNT = 3;
 
-    public MyPageService(MemberRepository memberRepository,
+    public MemberService(MemberRepository memberRepository,
         MemberCategoryRepository memberCategoryRepository, CategoryRepository categoryRepository) {
         this.memberRepository = memberRepository;
         this.memberCategoryRepository = memberCategoryRepository;
@@ -43,6 +47,26 @@ public class MyPageService {
     }
 
     @Transactional
+    public AdditionalInfoResponse updateAdditionalInfo(Long memberId, AdditionalInfoRequest request) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> TalKakException.of(MemberError.NOT_EXISTING_MEMBER));
+        List<Category> categories = new ArrayList<>();
+
+        member.updateMemberInfo(request.gender(), request.age());
+
+        request.categories()
+            .stream()
+            .map(CategoryType::fromName)
+            .forEach(categoryType -> {
+                Category category = categoryRepository.findByCategoryType(categoryType)
+                    .orElseThrow(() -> TalKakException.of(CategoryError.NOT_EXISTING_CATEGORY));
+                categories.add(category);
+                memberCategoryRepository.save(MemberCategory.of(member, category));
+            });
+
+        return AdditionalInfoResponse.of(categories, request);
+    }
+
     public MyPageInfoResponse updateMemberInfo(Long memberId, MyPageInfoRequest request) {
         // 유저 성별, 나이 검증
         Member member = memberRepository.findById(memberId)
@@ -78,6 +102,4 @@ public class MyPageService {
         return MyPageInfoResponse.of(member,
             memberCategories.stream().map(MemberCategory::getCategory).toList());
     }
-
-
 }

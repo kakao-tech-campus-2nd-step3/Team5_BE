@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class VideoServiceTest {
-
     @Autowired
     private VideoService videoService;
     private IdExtractor idExtractor = new IdExtractor();

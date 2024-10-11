@@ -8,11 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import ojosama.talkak.member.domain.Member;
 import ojosama.talkak.video.domain.Video;
 
 @Entity
 @Table(name = "comment")
+@Getter
 public class Comment {
 
     @Id
@@ -41,20 +43,6 @@ public class Comment {
         this.content = content;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-    public Video getVideo() {
-        return video;
-    }
     public void updateContent(String newContent) {
         this.content = newContent;
     }
