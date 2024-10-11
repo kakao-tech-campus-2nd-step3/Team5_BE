@@ -6,7 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,9 +39,4 @@ public class MemberCategory {
         this.category = category;
     }
 
-    public static void isValidCategories(List<Long> categories) {
-        if(categories.size() != 3) {
-            throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
-        }
-    }
 }
