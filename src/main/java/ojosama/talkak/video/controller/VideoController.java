@@ -15,8 +15,6 @@ import ojosama.talkak.video.dto.YoutubeUrlValidationResponse;
 import ojosama.talkak.video.service.AwsS3Service;
 import ojosama.talkak.video.service.VideoService;
 import ojosama.talkak.video.service.YoutubeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
