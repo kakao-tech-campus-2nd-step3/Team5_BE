@@ -23,8 +23,8 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         Authentication authentication) throws IOException, ServletException {
 
         OAuth2UserDetails oAuth2User = (OAuth2UserDetails) authentication.getPrincipal();
-        String accessToken = jwtUtil.generateAccessToken(oAuth2User.email(), oAuth2User.username());
-        String refreshToken = jwtUtil.generateRefreshToken(oAuth2User.email(), oAuth2User.username());
+        String accessToken = jwtUtil.generateAccessToken(oAuth2User.id(), oAuth2User.email(), oAuth2User.username());
+        String refreshToken = jwtUtil.generateRefreshToken(oAuth2User.id(), oAuth2User.email(), oAuth2User.username());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");

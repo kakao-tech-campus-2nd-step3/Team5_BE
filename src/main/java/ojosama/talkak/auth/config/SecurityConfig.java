@@ -1,6 +1,7 @@
 package ojosama.talkak.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import ojosama.talkak.auth.filter.JwtAuthorizationFilter;
 import ojosama.talkak.auth.filter.SuccessHandler;
 import ojosama.talkak.auth.service.AuthService;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,6 +23,7 @@ public class SecurityConfig {
 
     private final AuthService authService;
     private final SuccessHandler successHandler;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final AuthProperties authProperties;
 
     @Bean
@@ -40,8 +43,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                 (authorizeRequests) -> authorizeRequests
                     .requestMatchers("/h2-console/**").permitAll()
-                    // TODO
-                    .anyRequest().permitAll()
+                    .requestMatchers("/swagger-ui/**").permitAll()
+                    .requestMatchers(authProperties.authorizationUri()).permitAll()
+                    .anyRequest().authenticated()
             )
             .oauth2Login((oauth2Login) -> oauth2Login
                 .authorizationEndpoint(endpoint -> endpoint
@@ -52,6 +56,7 @@ public class SecurityConfig {
                     .userService(authService))
                 .successHandler(successHandler)
             )
+            .addFilterBefore(jwtAuthorizationFilter, AuthorizationFilter.class)
             .httpBasic(
                 AbstractHttpConfigurer::disable
             )
