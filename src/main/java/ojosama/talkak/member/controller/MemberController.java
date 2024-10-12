@@ -39,8 +39,7 @@ public class MemberController {
 
     @PatchMapping("/additional-info")
     public ResponseEntity<AdditionalInfoResponse> updateAdditionalInfo(@RequestBody AdditionalInfoRequest request, Authentication authentication) {
-//        Long id = Long.valueOf(authentication.getPrincipal().toString());
-        Long id = 1L;
+        Long id = Long.valueOf(authentication.getPrincipal().toString());
         AdditionalInfoResponse response = memberService.updateAdditionalInfo(id, request);
         return ResponseEntity.ok().body(response);
     }
