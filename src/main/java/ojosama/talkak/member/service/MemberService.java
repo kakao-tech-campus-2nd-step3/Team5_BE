@@ -29,7 +29,6 @@ public class MemberService {
     private final MemberCategoryRepository memberCategoryRepository;
     private final CategoryRepository categoryRepository;
 
-    public static final Integer ALLOWED_CATEGORY_SELECT_COUNT = 3;
 
     public MemberService(MemberRepository memberRepository,
         MemberCategoryRepository memberCategoryRepository, CategoryRepository categoryRepository) {

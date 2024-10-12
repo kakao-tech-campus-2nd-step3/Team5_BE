@@ -1,6 +1,5 @@
 package ojosama.talkak.category.domain;
 
-import static ojosama.talkak.member.service.MemberService.ALLOWED_CATEGORY_SELECT_COUNT;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,6 +23,8 @@ import ojosama.talkak.common.exception.code.MemberError;
 @Table(name = "category")
 public class Category {
 
+    public static final Integer ALLOWED_CATEGORY_SELECT_COUNT = 3;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
