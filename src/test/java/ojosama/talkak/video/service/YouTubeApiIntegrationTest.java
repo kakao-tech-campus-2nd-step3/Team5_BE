@@ -1,7 +1,7 @@
 package ojosama.talkak.video.service;
 
-import ojosama.talkak.video.request.YoutubeUrlValidationRequest;
-import ojosama.talkak.video.response.YoutubeUrlValidationResponse;
+import ojosama.talkak.video.dto.YoutubeUrlValidationRequest;
+import ojosama.talkak.video.dto.YoutubeUrlValidationResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

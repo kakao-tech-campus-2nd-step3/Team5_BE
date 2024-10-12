@@ -1,7 +1,7 @@
 package ojosama.talkak.auth.dto;
 
 import java.util.Map;
-import ojosama.talkak.member.domain.Member;
+import ojosama.talkak.member.model.Member;
 
 public record GoogleUserDetails(
     String email,

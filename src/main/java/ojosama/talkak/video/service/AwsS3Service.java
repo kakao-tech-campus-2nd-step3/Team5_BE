@@ -7,21 +7,22 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import ojosama.talkak.category.repository.CategoryRepository;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.VideoError;
-import ojosama.talkak.video.request.AwsS3Request;
-import ojosama.talkak.video.response.AwsS3Response;
-import ojosama.talkak.video.request.VideoRequest;
-import ojosama.talkak.video.response.VideoResponse;
-import ojosama.talkak.video.domain.Video;
+import ojosama.talkak.video.dto.AwsS3Request;
+import ojosama.talkak.video.dto.AwsS3Response;
+import ojosama.talkak.video.dto.VideoRequest;
+import ojosama.talkak.video.dto.VideoResponse;
+import ojosama.talkak.video.model.Video;
 import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -34,20 +35,15 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Transactional
     public VideoResponse uploadVideo(MultipartFile file, VideoRequest videoRequest)
         throws IOException {
-        try {
-            String fileName = file.getOriginalFilename();
-            Video video = new Video(videoRequest.title(), videoRequest.memberId(),
-                videoRequest.categoryId(), fileName);
-            video = videoRepository.save(video);
-            amazonS3.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null));
-            return new VideoResponse(video.getId(), video.getTitle(), video.getMemberId(),
-                video.getCategoryId(), video.getUniqueFileName());
-        } catch (Exception e) {
-            throw TalKakException.of(VideoError.S3_UPLOAD_ERROR);
-        }
+        String fileName = file.getOriginalFilename();
+        amazonS3.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null));
+        Video video = new Video(videoRequest.title(), videoRequest.memberId(),
+            videoRequest.categoryId(), fileName);
+        video = videoRepository.save(video);
+        return new VideoResponse(video.getId(), video.getTitle(), video.getMemberId(),
+            video.getCategoryId(), video.getUniqueFileName());
     }
 
     public URL generateDownloadUrl(Long id) throws MalformedURLException {

@@ -7,18 +7,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import ojosama.talkak.category.domain.CategoryType;
 import ojosama.talkak.category.repository.CategoryRepository;
-import ojosama.talkak.common.exception.TalKakException;
-import ojosama.talkak.common.exception.code.CategoryError;
+import ojosama.talkak.video.dto.YoutubeApiResponse;
+import ojosama.talkak.video.dto.YoutubeCategoryRequest;
 import ojosama.talkak.common.util.WebClientUtil;
-import ojosama.talkak.video.response.YoutubeApiResponse;
-import ojosama.talkak.video.request.YoutubeCategoryRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -50,11 +43,8 @@ public class YoutubeService {
     // 특정 카테고리의 유튜브 쇼츠 추출
     @Cacheable(value = "youtubeCategoryShortsCache")
     public List<YoutubeApiResponse> getShortsByCategory(YoutubeCategoryRequest youtubeCategoryRequest) throws IOException {
-        // CategoryId로 카테고리명 가져오기
-        CategoryType categoryType = categoryRepository.findCategoryTypeById(youtubeCategoryRequest.categoryId())
-            .orElseThrow(() -> TalKakException.of(CategoryError.NOT_EXISTING_CATEGORY));
-        String categoryName = categoryType.getName();
-
+        String categoryName = categoryRepository.findCategoryById(
+            youtubeCategoryRequest.categoryId());
         // 필요한 값들만 불러오도록 최소한의 필드 요청
         String url = YOUTUBE_API_URL + "?part=snippet&fields=items(id(videoId),snippet(publishedAt, title, channelId, thumbnails(default(url))))&q=쇼츠, "
             + categoryName + "&type=video&key=" + apiKey + "&maxResults=10";

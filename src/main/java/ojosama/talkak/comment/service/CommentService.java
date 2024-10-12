@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Objects;
 import ojosama.talkak.comment.dto.CommentRequest;
 import ojosama.talkak.comment.dto.CommentResponse;
-import ojosama.talkak.comment.domain.Comment;
+import ojosama.talkak.comment.model.Comment;
 import ojosama.talkak.comment.repository.CommentRepository;
 import ojosama.talkak.common.exception.TalKakException;
 import ojosama.talkak.common.exception.code.CommentError;
-import ojosama.talkak.member.domain.Member;
+import ojosama.talkak.member.model.Member;
 import ojosama.talkak.member.repository.MemberRepository;
 import ojosama.talkak.member.dto.MemberResponse;
-import ojosama.talkak.video.domain.Video;
+import ojosama.talkak.video.model.Video;
 import ojosama.talkak.video.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +29,13 @@ public class CommentService {
         this.videoRepository = videoRepository;
     }
 
-    public CommentResponse createComment(long memberId, long videoId,
-        CommentRequest commentRequest) {
+    public CommentResponse createComment(long memberId, long videoId, CommentRequest commentRequest) {
         Member member = memberRepository.findById(memberId)
             .orElseThrow(() -> TalKakException.of(CommentError.INVALID_MEMBER_ID));
         Video video = videoRepository.findById(videoId)
             .orElseThrow(() -> TalKakException.of(CommentError.INVALID_VIDEO_ID));
-        return convertToDTO(
-            commentRepository.save(new Comment(member, video, commentRequest.content())));
+        Comment comment = new Comment(member, video, commentRequest.content());
+        return convertToDTO(commentRepository.save(comment));
     }
 
     public List<CommentResponse> getCommentsByVideoId(long videoId) {
@@ -46,8 +45,7 @@ public class CommentService {
             .toList();
     }
 
-    public CommentResponse updateComment(Long commentId, Long memberId,
-        CommentRequest commentRequest) {
+    public CommentResponse updateComment(Long commentId, Long memberId, CommentRequest commentRequest) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> TalKakException.of(CommentError.INVALID_COMMENT_ID));
         if (!Objects.equals(comment.getMember().getId(), memberId)) {

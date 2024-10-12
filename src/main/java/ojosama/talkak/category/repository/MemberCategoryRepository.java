@@ -1,8 +1,8 @@
 package ojosama.talkak.category.repository;
 
 import java.util.List;
-import ojosama.talkak.category.domain.Category;
-import ojosama.talkak.category.domain.MemberCategory;
+import ojosama.talkak.category.model.Category;
+import ojosama.talkak.category.model.MemberCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

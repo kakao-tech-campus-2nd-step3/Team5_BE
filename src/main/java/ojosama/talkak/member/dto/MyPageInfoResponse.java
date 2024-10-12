@@ -1,14 +1,20 @@
 package ojosama.talkak.member.dto;
 
 import java.util.List;
-import ojosama.talkak.category.domain.Category;
-import ojosama.talkak.member.domain.Member;
+import ojosama.talkak.category.model.Category;
+import ojosama.talkak.member.model.Member;
 
 public record MyPageInfoResponse(
     String gender,
     String age,
     List<CategoryResponse> categories
 ) {
+    public record CategoryResponse(
+        Long id,
+        String name
+    ) {
+    }
+
 
     public static MyPageInfoResponse of(Member member, List<Category> categories) {
         String gender = !member.getGender() ? "남자" : "여자";
