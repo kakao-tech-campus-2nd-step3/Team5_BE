@@ -1,5 +1,6 @@
 package ojosama.talkak.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ojosama.talkak.member.dto.AdditionalInfoRequest;
 import ojosama.talkak.member.dto.AdditionalInfoResponse;
@@ -31,7 +32,7 @@ public class MemberController {
     }
 
     @PutMapping("/me")
-    public ResponseEntity<MyPageInfoResponse> updateMemberInfo(@RequestBody MyPageInfoRequest myPageInfoRequest) {
+    public ResponseEntity<MyPageInfoResponse> updateMemberInfo(@RequestBody @Valid MyPageInfoRequest myPageInfoRequest) {
         Long memberId = 1L;
         MyPageInfoResponse memberInfo = memberService.updateMemberInfo(memberId, myPageInfoRequest);
         return new ResponseEntity<>(memberInfo, HttpStatus.OK);
@@ -39,8 +40,7 @@ public class MemberController {
 
     @PatchMapping("/additional-info")
     public ResponseEntity<AdditionalInfoResponse> updateAdditionalInfo(@RequestBody AdditionalInfoRequest request, Authentication authentication) {
-//        Long id = Long.valueOf(authentication.getPrincipal().toString());
-        Long id = 1L;
+        Long id = Long.valueOf(authentication.getPrincipal().toString());
         AdditionalInfoResponse response = memberService.updateAdditionalInfo(id, request);
         return ResponseEntity.ok().body(response);
     }
