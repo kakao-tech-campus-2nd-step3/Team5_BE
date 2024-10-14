@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberController implements MemberApiController {
 
     private final MemberService memberService;
 
