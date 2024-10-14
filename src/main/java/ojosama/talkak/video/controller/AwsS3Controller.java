@@ -1,8 +1,8 @@
 package ojosama.talkak.video.controller;
 
 import lombok.RequiredArgsConstructor;
-import ojosama.talkak.video.dto.AwsS3Request;
-import ojosama.talkak.video.dto.AwsS3Response;
+import ojosama.talkak.video.request.AwsS3Request;
+import ojosama.talkak.video.response.AwsS3Response;
 import ojosama.talkak.video.service.AwsS3Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
