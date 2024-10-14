@@ -29,13 +29,14 @@ public class CommentService {
         this.videoRepository = videoRepository;
     }
 
-    public CommentResponse createComment(long memberId, long videoId, CommentRequest commentRequest) {
+    public CommentResponse createComment(long memberId, long videoId,
+        CommentRequest commentRequest) {
         Member member = memberRepository.findById(memberId)
             .orElseThrow(() -> TalKakException.of(CommentError.INVALID_MEMBER_ID));
         Video video = videoRepository.findById(videoId)
             .orElseThrow(() -> TalKakException.of(CommentError.INVALID_VIDEO_ID));
-        Comment comment = new Comment(member, video, commentRequest.content());
-        return convertToDTO(commentRepository.save(comment));
+        return convertToDTO(
+            commentRepository.save(new Comment(member, video, commentRequest.content())));
     }
 
     public List<CommentResponse> getCommentsByVideoId(long videoId) {
@@ -45,7 +46,8 @@ public class CommentService {
             .toList();
     }
 
-    public CommentResponse updateComment(Long commentId, Long memberId, CommentRequest commentRequest) {
+    public CommentResponse updateComment(Long commentId, Long memberId,
+        CommentRequest commentRequest) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> TalKakException.of(CommentError.INVALID_COMMENT_ID));
         if (!Objects.equals(comment.getMember().getId(), memberId)) {

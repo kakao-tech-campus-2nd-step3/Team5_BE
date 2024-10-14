@@ -11,12 +11,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
-<<<<<<< HEAD:src/main/java/ojosama/talkak/video/model/Video.java
 import lombok.Getter;
-import ojosama.talkak.comment.model.Comment;
-=======
 import ojosama.talkak.comment.domain.Comment;
->>>>>>> cb827e14a78941820bcceef86b51244432ad0bb0:src/main/java/ojosama/talkak/video/domain/Video.java
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
@@ -37,8 +33,13 @@ public class Video {
     private String thumbnail;
     private Boolean isPublic;
     private Long countLikes;
+    private Long views = 0L;
     @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public Video() {
+
+    }
 
     public Video(Long id, String title, Long countLikes) {
         this.id = id;
@@ -59,5 +60,9 @@ public class Video {
 
     public void decrementLikes() {
         this.countLikes--;
+    }
+
+    public void incrementViews() {
+        this.views += 1;
     }
 }

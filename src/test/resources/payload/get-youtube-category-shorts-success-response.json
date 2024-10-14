@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "id": { "videoId": "67890" },
+      "snippet": {
+        "publishedAt": "2024-07-24T11:48:50Z",
+        "title": "Music Video",
+        "channelId": "UC678",
+        "thumbnails": {
+          "default": {
+            "url": "http://example.com/music-thumbnail.jpg"
+          }
+        }
+      }
+    }
+  ]
+}

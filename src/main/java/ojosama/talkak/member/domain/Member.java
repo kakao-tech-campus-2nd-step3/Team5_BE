@@ -59,6 +59,9 @@ public class Member {
     }
 
     public void updateMemberInfo(String gender, String age) {
+        if (gender == null || age == null) {
+            throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);
+        }
         Age newAge = Age.fromName(age);
         if (!gender.matches("남자|여자") || newAge == null) {
             throw TalKakException.of(MemberError.ERROR_UPDATE_MEMBER_INFO);

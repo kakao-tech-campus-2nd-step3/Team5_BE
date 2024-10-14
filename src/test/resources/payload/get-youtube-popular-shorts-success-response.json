@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "id": { "videoId": "12345" },
+      "snippet": {
+        "publishedAt": "2024-07-24T11:48:50Z",
+        "title": "Test Video",
+        "channelId": "UC123",
+        "thumbnails": {
+          "default": {
+            "url": "http://example.com/thumbnail.jpg"
+          }
+        }
+      }
+    }
+  ]
+}

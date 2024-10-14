@@ -27,6 +27,9 @@ public class Reaction {
     @JoinColumn(name = "video_id", insertable = false, updatable = false)
     private Video video;
 
+    public Reaction() {
+    }
+
     public Reaction(ReactionId reactionId, Member member, Video video, boolean reactionType) {
         this.id = reactionId;
         this.member = member;

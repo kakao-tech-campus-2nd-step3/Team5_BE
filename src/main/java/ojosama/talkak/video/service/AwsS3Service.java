@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -33,15 +34,20 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Transactional
     public VideoResponse uploadVideo(MultipartFile file, VideoRequest videoRequest)
         throws IOException {
-        String fileName = file.getOriginalFilename();
-        amazonS3.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null));
-        Video video = new Video(videoRequest.title(), videoRequest.memberId(),
-            videoRequest.categoryId(), fileName);
-        video = videoRepository.save(video);
-        return new VideoResponse(video.getId(), video.getTitle(), video.getMemberId(),
-            video.getCategoryId(), video.getUniqueFileName());
+        try {
+            String fileName = file.getOriginalFilename();
+            Video video = new Video(videoRequest.title(), videoRequest.memberId(),
+                videoRequest.categoryId(), fileName);
+            video = videoRepository.save(video);
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null));
+            return new VideoResponse(video.getId(), video.getTitle(), video.getMemberId(),
+                video.getCategoryId(), video.getUniqueFileName());
+        } catch (Exception e) {
+            throw TalKakException.of(VideoError.S3_UPLOAD_ERROR);
+        }
     }
 
     public URL generateDownloadUrl(Long id) throws MalformedURLException {
