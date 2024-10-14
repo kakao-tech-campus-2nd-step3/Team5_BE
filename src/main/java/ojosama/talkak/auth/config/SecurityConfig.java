@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ojosama.talkak.auth.filter.JwtAuthorizationFilter;
 import ojosama.talkak.auth.filter.SuccessHandler;
 import ojosama.talkak.auth.service.AuthService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,6 +27,9 @@ public class SecurityConfig {
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final AuthProperties authProperties;
 
+    @Value("${springdoc.swagger-ui.path}")
+    private String swaggerAlias;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -43,7 +47,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                 (authorizeRequests) -> authorizeRequests
                     .requestMatchers("/h2-console/**").permitAll()
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", swaggerAlias).permitAll()
                     .requestMatchers(authProperties.authorizationUri()).permitAll()
                     .anyRequest().authenticated()
             )
