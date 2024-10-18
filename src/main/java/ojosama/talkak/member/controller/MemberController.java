@@ -1,5 +1,6 @@
 package ojosama.talkak.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ojosama.talkak.member.dto.AdditionalInfoRequest;
 import ojosama.talkak.member.dto.AdditionalInfoResponse;
@@ -19,28 +20,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberController implements MemberApiController {
 
     private final MemberService memberService;
 
     @GetMapping("/me")
-    public ResponseEntity<MyPageInfoResponse> getMemberInfo() {
-        Long memberId = 1L; //추후 로그인 기능 구현 시 수정 예정
+    public ResponseEntity<MyPageInfoResponse> getMemberInfo(Authentication authentication) {
+        Long memberId = Long.valueOf(authentication.getPrincipal().toString());
         MyPageInfoResponse memberInfo = memberService.getMemberInfo(memberId);
         return new ResponseEntity<>(memberInfo, HttpStatus.OK);
     }
 
     @PutMapping("/me")
-    public ResponseEntity<MyPageInfoResponse> updateMemberInfo(@RequestBody MyPageInfoRequest myPageInfoRequest) {
-        Long memberId = 1L;
+    public ResponseEntity<MyPageInfoResponse> updateMemberInfo(@RequestBody @Valid MyPageInfoRequest myPageInfoRequest, Authentication authentication) {
+        Long memberId = Long.valueOf(authentication.getPrincipal().toString());
         MyPageInfoResponse memberInfo = memberService.updateMemberInfo(memberId, myPageInfoRequest);
         return new ResponseEntity<>(memberInfo, HttpStatus.OK);
     }
 
     @PatchMapping("/additional-info")
     public ResponseEntity<AdditionalInfoResponse> updateAdditionalInfo(@RequestBody AdditionalInfoRequest request, Authentication authentication) {
-//        Long id = Long.valueOf(authentication.getPrincipal().toString());
-        Long id = 1L;
+        Long id = Long.valueOf(authentication.getPrincipal().toString());
         AdditionalInfoResponse response = memberService.updateAdditionalInfo(id, request);
         return ResponseEntity.ok().body(response);
     }

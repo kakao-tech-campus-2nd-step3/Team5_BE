@@ -1,8 +1,10 @@
 package ojosama.talkak.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import ojosama.talkak.auth.filter.JwtAuthorizationFilter;
 import ojosama.talkak.auth.filter.SuccessHandler;
 import ojosama.talkak.auth.service.AuthService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,7 +24,11 @@ public class SecurityConfig {
 
     private final AuthService authService;
     private final SuccessHandler successHandler;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final AuthProperties authProperties;
+
+    @Value("${springdoc.swagger-ui.path}")
+    private String swaggerAlias;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,8 +47,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                 (authorizeRequests) -> authorizeRequests
                     .requestMatchers("/h2-console/**").permitAll()
-                    // TODO
-                    .anyRequest().permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", swaggerAlias).permitAll()
+                    .requestMatchers(authProperties.authorizationUri()).permitAll()
+                    .anyRequest().authenticated()
             )
             .oauth2Login((oauth2Login) -> oauth2Login
                 .authorizationEndpoint(endpoint -> endpoint
@@ -52,6 +60,7 @@ public class SecurityConfig {
                     .userService(authService))
                 .successHandler(successHandler)
             )
+            .addFilterBefore(jwtAuthorizationFilter, AuthorizationFilter.class)
             .httpBasic(
                 AbstractHttpConfigurer::disable
             )
@@ -63,8 +72,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         corsConfiguration.addAllowedMethod("*");

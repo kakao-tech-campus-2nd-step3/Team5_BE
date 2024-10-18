@@ -1,6 +1,5 @@
 package ojosama.talkak.category.domain;
 
-import static ojosama.talkak.member.service.MemberService.ALLOWED_CATEGORY_SELECT_COUNT;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,11 +23,17 @@ import ojosama.talkak.common.exception.code.MemberError;
 @Table(name = "category")
 public class Category {
 
+    public static final Integer ALLOWED_CATEGORY_SELECT_COUNT = 3;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
+
+    public Category(CategoryType categoryType) {
+        this.categoryType = categoryType;
+    }
 
     public static void validateCategoryInputs(Set<Long> categories) {
         // 허용 카테고리 개수와 일치하지 않으면 잘못된 입력 요청
