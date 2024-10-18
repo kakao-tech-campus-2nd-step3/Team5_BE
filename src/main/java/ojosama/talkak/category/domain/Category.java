@@ -31,6 +31,10 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
 
+    public Category(CategoryType categoryType) {
+        this.categoryType = categoryType;
+    }
+
     public static void validateCategoryInputs(Set<Long> categories) {
         // 허용 카테고리 개수와 일치하지 않으면 잘못된 입력 요청
         if(categories.size() != ALLOWED_CATEGORY_SELECT_COUNT) {
