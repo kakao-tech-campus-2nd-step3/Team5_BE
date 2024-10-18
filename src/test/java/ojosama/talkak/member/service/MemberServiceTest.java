@@ -106,16 +106,16 @@ class MemberServiceTest {
     @Test
     void invalid_input_gender() {
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createGender(null)));
+            () -> updateMemberInfoTest(member.getId(), createGender(null)));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createGender("")));
+            () -> updateMemberInfoTest(member.getId(), createGender("")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createGender("남자 ")));
+            () -> updateMemberInfoTest(member.getId(), createGender("남자 ")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createGender("남자, 여자")));
+            () -> updateMemberInfoTest(member.getId(), createGender("남자, 여자")));
     }
 
     @DisplayName("마이페이지 개인정보 수정하기 실패-유효하지 않은 나이 정보")
@@ -125,50 +125,54 @@ class MemberServiceTest {
             () -> memberService.updateMemberInfo(member.getId(), createAge(null)));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createAge("")));
+            () -> updateMemberInfoTest(member.getId(), createAge("")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createAge("10")));
+            () -> updateMemberInfoTest(member.getId(), createAge("10")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createAge("10대 ")));
+            () -> updateMemberInfoTest(member.getId(), createAge("10대 ")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createAge("10대.")));
+            () -> updateMemberInfoTest(member.getId(), createAge("10대.")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createAge("60대")));
+            () -> updateMemberInfoTest(member.getId(), createAge("60대")));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(), createAge("50대이상")));
+            () -> updateMemberInfoTest(member.getId(), createAge("50대이상")));
     }
 
     @DisplayName("마이페이지 개인정보 수정하기 실패-유효하지 않은 카테고리 옵션")
     @Test
     void invalid_input_categories() {
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(),
+            () -> updateMemberInfoTest(member.getId(),
                 createCategories(List.of("", "", ""))));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(),
+            () -> updateMemberInfoTest(member.getId(),
                 createCategories(List.of("음식"))));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(),
+            () -> updateMemberInfoTest(member.getId(),
                 createCategories(List.of("음식", "음악"))));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(),
+            () -> updateMemberInfoTest(member.getId(),
                 createCategories(List.of("음식", "음악", "여행", "게임"))));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(),
+            () -> updateMemberInfoTest(member.getId(),
                 createCategories(List.of("음식", "음악", "음악"))));
 
         assertErrorCode(MemberError.ERROR_UPDATE_MEMBER_INFO,
-            () -> memberService.updateMemberInfo(member.getId(),
+            () -> updateMemberInfoTest(member.getId(),
                 createCategories(List.of("음식", "음악", "여행 "))));
+    }
+
+    private void updateMemberInfoTest(Long id, MyPageInfoRequest request) {
+        memberService.updateMemberInfo(id, request);
     }
 
     private MyPageInfoRequest createGender(String gender) {
