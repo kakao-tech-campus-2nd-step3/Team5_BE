@@ -61,7 +61,6 @@ public class MemberService {
             .forEach(categoryType -> {
                 Category category = categoryRepository.findByCategoryType(categoryType)
                     .orElseThrow(() -> TalKakException.of(CategoryError.NOT_EXISTING_CATEGORY));
-                System.out.println("category.getCategoryType().getName() = " + category.getCategoryType().getName());
                 categories.add(category);
                 memberCategoryRepository.save(MemberCategory.of(member, category));
             });

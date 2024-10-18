@@ -1,4 +1,4 @@
-package ojosama.talkak.category.util;
+package ojosama.talkak.category.config;
 
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
