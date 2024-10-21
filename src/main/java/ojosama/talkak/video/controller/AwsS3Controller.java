@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/files/presigned")
 @RequiredArgsConstructor
-public class AwsS3Controller {
+public class AwsS3Controller implements AwsS3ApiController {
 
     private final AwsS3Service awsS3Service;
+
 
     @PostMapping("/upload")
     public AwsS3Response getPresignedUrlToUpload(@RequestBody AwsS3Request awsS3Request) {
